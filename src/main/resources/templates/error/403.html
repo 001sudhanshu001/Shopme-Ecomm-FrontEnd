@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Error - Shopme', 'none')" />
+<body>
+    <!-- Spring will automatically detect this page when error in url is found  -->
+    <div class="container-fluid">
+       <div th:replace="navigation ::header_menu"></div>
+
+      <div class="container-fluid">
+        <div class="text-center">
+            <h2>Sorry, you don't have permission to access this page</h2>
+        </div>
+      </div>
+      <div th:replace="navigation :: footer_menu"></div>
+
+    </div>
+
+</body>
+</html>

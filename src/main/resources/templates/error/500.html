@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head  th:replace="fragments :: page_head('Internal Server Error - Shopme', 'none')" />
+<body>
+    <!-- Spring will automatically detect this page -->
+    <div class="container-fluid">
+
+      <div th:replace="navigation :: header_menu"></div>
+
+      <div class="container-fluid">
+        <div class="text-center"> <!-- eg. when sortField is wrong-->
+            <h2>Sorry, the server has encountered an error while processing your request </h2>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="navigation :: footer_menu"></div>
+
+
+</body>
+</html>
