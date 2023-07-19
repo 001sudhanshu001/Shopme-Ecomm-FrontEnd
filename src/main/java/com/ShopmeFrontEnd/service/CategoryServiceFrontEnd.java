@@ -32,7 +32,7 @@ public class CategoryServiceFrontEnd {
 
     public List<Category> getCategoryParents(Category child) {
         // This will return parent in the top-down order
-        // This is required for breadcrum, First top parent and then lowe ones
+        // This is required for breadcrumb, First top parent and then lowe ones
         List<Category> listParents = new ArrayList<>();
 
         Category parent = child.getParent();
