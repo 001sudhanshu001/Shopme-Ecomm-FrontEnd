@@ -14,8 +14,10 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         exposeDirectory("../category-images", registry);
         exposeDirectory("../brand-logos", registry);
-       exposeDirectory("../product-images", registry);
-    }
+        exposeDirectory("../product-images", registry);
+        exposeDirectory("../site-logo", registry);
+
+   }
 
    private void exposeDirectory(String pathPattern, ResourceHandlerRegistry registry){
        Path path = Paths.get(pathPattern);
