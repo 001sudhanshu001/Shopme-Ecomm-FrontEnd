@@ -22,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        System.out.println("SecurityConfig Object Created....!");
 //    }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -35,9 +35,9 @@ public class StateRestControllerFrontEnd {
         return String.valueOf(savedState.getId());
     }
 
-    @DeleteMapping("/sates/delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        stateRepo.deleteById(id);
-    }
+//    @DeleteMapping("/sates/delete/{id}")
+//    public void delete(@PathVariable("id") Integer id) {
+//        stateRepo.deleteById(id);
+//    }
 
 }

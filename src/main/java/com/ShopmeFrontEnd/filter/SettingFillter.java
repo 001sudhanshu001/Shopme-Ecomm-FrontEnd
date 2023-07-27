@@ -1,7 +1,7 @@
 package com.ShopmeFrontEnd.filter;
 
 import com.ShopmeFrontEnd.entity.readonly.Setting;
-import com.ShopmeFrontEnd.entity.readonly.SettingService;
+import com.ShopmeFrontEnd.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
