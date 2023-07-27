@@ -9,7 +9,6 @@ public class SettingBag {
     private List<Setting> listSettings;
 
     public Setting get(String key){
-        System.out.println("listSetting Object : " + listSettings);
         int index = listSettings.indexOf(new Setting(key)); // it wiil use equals() method of Setting class to compare object
         if(index >= 0){
             return listSettings.get(index);
