@@ -25,7 +25,7 @@
                         <a class="nav-link" href="">Shipping &amp; Delivery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Login</a>
+                        <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/register}">Register</a>
@@ -40,6 +40,13 @@
 
     <div th:fragment="search_nav" class="row">
         <div class="col-md">
+
+            <th:block sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                    <input type="submit" value="logout"/>
+                </form>
+            </th:block>
+
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="collapse navbar-collapse" id="searchNavbar">
                     <form th:action="@{/search}" class="form-inline">
@@ -47,6 +54,43 @@
                                th:value="${keyword}" placeholder="keyword" required="required">
                         <input type="submit" value="search" class="btn btn-outline-success">
                     </form>
+
+                    <ul class="navbar-nav">
+                        <!-- only logged-in user can see it-->
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <b>
+                                    <a class="nav-link" th:href="@{/account_details}"
+                                       sec:authentication="principal.fullName">
+                                    </a>
+                                </b>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/address_book}">Address Book</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/customer/questions}">Questions</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/reviews}">Reviews</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/orders}">Orders</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
+                            </li>
+                        </th:block>
+                    </ul>
                 </div>
             </nav>
         </div>

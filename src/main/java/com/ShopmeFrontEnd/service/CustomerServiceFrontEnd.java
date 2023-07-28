@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CustomerService {
+public class CustomerServiceFrontEnd {
     // This is used to fetch all the countries from DB to show into Customer Registration Page
     private final CountryRepoFrontEnd countryRepo;
     private final CustomerRepoFrontEnd customerRepo;

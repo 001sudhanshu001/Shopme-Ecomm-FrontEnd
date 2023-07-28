@@ -4,7 +4,7 @@ import com.ShopmeFrontEnd.Util.MailSenderUtil;
 import com.ShopmeFrontEnd.entity.readonly.Country;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.EmailSettingBag;
-import com.ShopmeFrontEnd.service.CustomerService;
+import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
 import com.ShopmeFrontEnd.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -23,9 +23,9 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class CustomerController {
+public class CustomerControllerFrontEnd {
 
-    private final CustomerService customerService;
+    private final CustomerServiceFrontEnd customerService;
     private final SettingService settingService;
 
     @GetMapping("/register")
