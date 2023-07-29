@@ -7,6 +7,8 @@ import com.ShopmeFrontEnd.entity.readonly.EmailSettingBag;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
 import com.ShopmeFrontEnd.service.SettingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -25,7 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerControllerFrontEnd {
 
-    private final CustomerServiceFrontEnd customerService;
+    @Autowired
+    private CustomerServiceFrontEnd customerService;
     private final SettingService settingService;
 
     @GetMapping("/register")

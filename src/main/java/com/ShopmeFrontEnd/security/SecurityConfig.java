@@ -1,7 +1,12 @@
 package com.ShopmeFrontEnd.security;
 
+import com.ShopmeFrontEnd.security.oauth2.CustomerOauth2UserService;
+//import com.ShopmeFrontEnd.security.oauth2.OAuth2LoginSuccessHandler;
+import com.ShopmeFrontEnd.security.oauth2.OAuth2LoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import javax.annotation.PostConstruct;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,6 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    void init() {
 //        System.out.println("SecurityConfig Object Created....!");
 //    }
+
+    @Autowired
+    private CustomerOauth2UserService oauth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler auth2LoginSuccessHandler;
+    @Autowired
+    private DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,7 +56,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .usernameParameter("email")
+                    .successHandler(databaseLoginSuccessHandler)
                     .permitAll()
+                .and()
+                .oauth2Login()
+                    .loginPage("/login")
+                    .userInfoEndpoint()
+                    .userService(oauth2UserService)
+                    .and()
+                    .successHandler(auth2LoginSuccessHandler) // on successful authentication by oauth this handler will
+                                    // be called in which we will save user info in DB if user is not present
                 .and()
                 .logout().permitAll()
                 .and()
@@ -75,3 +95,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
