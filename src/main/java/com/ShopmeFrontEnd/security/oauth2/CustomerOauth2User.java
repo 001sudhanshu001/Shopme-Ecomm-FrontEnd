@@ -8,10 +8,14 @@ import java.util.Map;
 
 public class CustomerOauth2User implements OAuth2User {
 
+    private String fullName;
+
+    private String clientName;
     private OAuth2User oAuth2User;
 
-    public CustomerOauth2User(OAuth2User oAuth2User) {
+    public CustomerOauth2User(OAuth2User oAuth2User, String clientName) {
         this.oAuth2User = oAuth2User;
+        this.clientName = clientName;
     }
 
     @Override
@@ -33,7 +37,17 @@ public class CustomerOauth2User implements OAuth2User {
         return oAuth2User.getAttribute("email");
     }
 
-    public String getFullName() { // In case of oauth2 this method will be called from the fragment.html to get fulll name
-        return oAuth2User.getAttribute("name");
+    public String getClientName() {
+        return clientName;
     }
+
+    public String getFullName() { // In case of oauth2 this method will be called from the fragment.html to get fulll name
+
+        return fullName != null ? fullName : oAuth2User.getAttribute("name");
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
 }

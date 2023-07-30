@@ -1,6 +1,7 @@
 package com.ShopmeFrontEnd.dao;
 
 
+import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,9 +19,9 @@ public interface CustomerRepoFrontEnd extends JpaRepository<Customer, Integer> {
     @Modifying
     void enable(Integer id);
 
-//    @Query("UPDATE Customer c SET c.authenticationType = ?2 WHERE c.id = ?1")
-//    @Modifying
-//    void updateAuthenticationType(Integer customerId, AuthenticationType type);
-//
+    @Query("UPDATE Customer c SET c.authenticationType = ?2 WHERE c.id = ?1")
+    @Modifying
+    void updateAuthenticationType(Integer customerId, AuthenticationType type);
+
 
 }

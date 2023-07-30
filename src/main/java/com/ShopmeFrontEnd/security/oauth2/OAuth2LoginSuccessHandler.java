@@ -1,8 +1,8 @@
 package com.ShopmeFrontEnd.security.oauth2;
 
+import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -30,15 +30,32 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         String name = oauth2User.getName();
         String email = oauth2User.getEmail();
         String countryCode = request.getLocale().getCountry();
+        String clientName = oauth2User.getClientName();
 
+        System.out.println("onAuthenticationSuccess : " + name + " | " + email);
+        System.out.println("Client Name " + clientName);
+
+        AuthenticationType authenticationType = getAuthenticationType(clientName);
         Customer customer = customerService.getCustomerByEmail(email);
 
         if(customer == null){ // means this user does not exist in our database, so we will enter it into DB
-            customerService.addNewCustomerUponOAuthLogin(name, email, countryCode);
+            customerService.addNewCustomerUponOAuthLogin(name, email, countryCode, authenticationType);
         }else { // Just changing Authentication Type
-          //  customerService.updateAuthenticationType(customer, AuthenticationType.GOOGLE);
+             customerService.updateAuthenticationType(customer, authenticationType);
         }
 
         super.onAuthenticationSuccess(request, response, authentication);
+    }
+
+    private AuthenticationType getAuthenticationType(String clientName) {
+        if(clientName.equals("Google")){
+            return AuthenticationType.GOOGLE;
+        }else if(clientName.equals("Facebook")){
+            return AuthenticationType.FACEBOOK;
+        } else if (clientName.equals("Github")) {
+            return AuthenticationType.GITHUB;
+        }else {
+            return AuthenticationType.DATABASE;
+        }
     }
 }

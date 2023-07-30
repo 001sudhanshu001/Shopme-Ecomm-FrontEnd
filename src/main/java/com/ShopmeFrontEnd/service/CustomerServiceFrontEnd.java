@@ -1,8 +1,8 @@
 package com.ShopmeFrontEnd.service;
 
-import com.ShopmeFrontEnd.customerAuthentication.AuthenticationType;
 import com.ShopmeFrontEnd.dao.CountryRepoFrontEnd;
 import com.ShopmeFrontEnd.dao.CustomerRepoFrontEnd;
+import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
 import com.ShopmeFrontEnd.entity.readonly.Country;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class CustomerServiceFrontEnd {
         customer.setPassword(encodedPassword);
         customer.setEnabled(false); // customer will be enabled after verification
         customer.setCreatedTime(new Date());
-//        customer.setAuthenticationType(AuthenticationType.DATABASE);
+        customer.setAuthenticationType(AuthenticationType.DATABASE);
 
         String randomCode = RandomString.make(64);
         customer.setVerificationCode(randomCode);
@@ -60,17 +60,19 @@ public class CustomerServiceFrontEnd {
         }
     }
 
-//    public void updateAuthenticationType(Customer customer, AuthenticationType type) {
-//        if(!customer.getAuthenticationType().equals(type)){
-//            customerRepo.updateAuthenticationType(customer.getId(), type);
-//        }
-//    }
+    public void updateAuthenticationType(Customer customer, AuthenticationType type) {
+        // this null condition was the for already entered customer who don't have authType, now this is not required
+        if(customer.getAuthenticationType() == null || !customer.getAuthenticationType().equals(type)){
+            customerRepo.updateAuthenticationType(customer.getId(), type);
+        }
+    }
 
     public Customer getCustomerByEmail(String email){
         return customerRepo.findByEmail(email);
     }
 
-    public void addNewCustomerUponOAuthLogin(String name, String email, String countryCode) {
+    public void addNewCustomerUponOAuthLogin(String name, String email, String countryCode,
+                                                AuthenticationType authenticationType) {
         // Here we have only customer name and email and country from request
         Customer customer = new Customer();
         customer.setEmail(email);
@@ -79,7 +81,7 @@ public class CustomerServiceFrontEnd {
 
         customer.setEnabled(true);
         customer.setCreatedTime(new Date());
-        // customer.setAuthenticationType(AuthenticationType.GOOGLE);
+        customer.setAuthenticationType(authenticationType);
         customer.setPassword("");
         customer.setAddressLine1("");
         customer.setCity("");
@@ -103,6 +105,40 @@ public class CustomerServiceFrontEnd {
             String lastName = name.replaceFirst(firstName, "");
             customer.setLastName(lastName);
         }
+    }
+
+    public void update(Customer customerInForm) {
+        Customer customerInDB = customerRepo.findById(customerInForm.getId()).get();
+
+        // Password can be updated only if Authentication type is Database
+        if(customerInDB.getAuthenticationType().equals(AuthenticationType.DATABASE)){
+            if (!customerInForm.getPassword().isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(customerInForm.getPassword());
+                customerInForm.setPassword(encodedPassword);
+            } else {
+                customerInForm.setPassword(customerInDB.getPassword());
+            }
+        }else { // Because Password can't be null
+            customerInForm.setPassword(customerInDB.getPassword());
+        }
+
+        // Since in the Editing form are not sending created time, enabled status, and verification code
+        // so if we update it then all these three values will be null.
+        // so we have to add these also explicitly
+        customerInForm.setEnabled(customerInDB.isEnabled());
+        customerInForm.setCreatedTime(customerInDB.getCreatedTime());
+        customerInForm.setVerificationCode(customerInDB.getVerificationCode());
+        customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
+
+        // This is to avoid glitch
+        if(customerInForm.getState() == null){
+            customerInForm.setState(customerInDB.getState());
+        }
+        if(customerInForm.getCountry() == null){
+            customerInForm.setCountry(customerInDB.getCountry());
+        }
+
+        customerRepo.save(customerInForm);
     }
 
 }

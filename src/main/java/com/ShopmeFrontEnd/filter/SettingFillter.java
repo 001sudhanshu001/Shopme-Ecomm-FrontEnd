@@ -36,7 +36,7 @@ public class SettingFillter implements Filter {
             request.setAttribute(setting.getKey(), setting.getValue());
         });
 
-        System.out.println(url);
+//       System.out.println(url);
 
         filterChain.doFilter(request, response);
     }

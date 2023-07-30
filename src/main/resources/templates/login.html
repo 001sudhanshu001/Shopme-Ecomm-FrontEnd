@@ -12,6 +12,10 @@
 		<a class="btn btn-lg btn-secondary fab fa-google" th:href="@{/oauth2/authorization/google}">&nbsp;&nbsp;Continue with Google</a>
 	</div>
 
+	<div class="mt-3">							<!--    This url is defined by spring security client library -->
+		<a class="btn btn-lg btn-secondary fa-brands fa-github " th:href="@{/oauth2/authorization/github}">&nbsp;&nbsp;Continue with Github</a>
+	</div>
+
 	<div>&nbsp;</div>
 	
 	<form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">

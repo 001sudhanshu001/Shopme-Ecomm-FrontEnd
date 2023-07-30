@@ -1,6 +1,5 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
-import com.ShopmeFrontEnd.customerAuthentication.AuthenticationType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -60,14 +59,14 @@ public class Customer {
     @Column(name = "created_time")
     private Date createdTime;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_type", length = 10)
+    private AuthenticationType authenticationType;
+
+
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-
-
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "authentication_type", length = 10)
-//    private AuthenticationType authenticationType;
 
 
     @Transient

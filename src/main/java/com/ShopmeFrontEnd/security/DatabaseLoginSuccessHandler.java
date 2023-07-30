@@ -1,9 +1,8 @@
 package com.ShopmeFrontEnd.security;
 
-import com.ShopmeFrontEnd.customerAuthentication.AuthenticationType;
+import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -31,9 +30,9 @@ public class DatabaseLoginSuccessHandler extends SavedRequestAwareAuthentication
         System.out.println("After Database login success");
 
         // MAKE ONLY NECESSARY CALL TO DATABSE
-//        if(!customer.getAuthenticationType().equals(AuthenticationType.DATABASE)){
-//            customerService.updateAuthenticationType(customer, AuthenticationType.DATABASE);
-//        }
+        if(customer.getAuthenticationType() == null || !customer.getAuthenticationType().equals(AuthenticationType.DATABASE)){
+            customerService.updateAuthenticationType(customer, AuthenticationType.DATABASE);
+        }
 
         super.onAuthenticationSuccess(request, response, authentication);
     }
