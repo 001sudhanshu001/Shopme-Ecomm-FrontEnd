@@ -170,7 +170,7 @@ public class CustomerControllerFrontEnd {
 
         // if customer logged-in using DATABASE
         if(principal instanceof UsernamePasswordAuthenticationToken || principal instanceof RememberMeAuthenticationToken){
-            CustomerUserDetail userDetail = (CustomerUserDetail) principal;
+            CustomerUserDetail userDetail = getCustomerUserDetailObject(principal);
             Customer authenticatedCustomer = userDetail.getCustomer();
             authenticatedCustomer.setFirstName(customer.getFirstName());
             authenticatedCustomer.setLastName(customer.getLastName());
@@ -185,4 +185,15 @@ public class CustomerControllerFrontEnd {
 
     }
 
+    private CustomerUserDetail getCustomerUserDetailObject(Object principal){
+        CustomerUserDetail userDetail = null;
+        if(principal instanceof UsernamePasswordAuthenticationToken){
+            UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+            userDetail = (CustomerUserDetail) token.getPrincipal();
+        }else if(principal instanceof RememberMeAuthenticationToken){
+            RememberMeAuthenticationToken token = (RememberMeAuthenticationToken) principal;
+            userDetail = (CustomerUserDetail) token.getPrincipal();
+        }
+        return userDetail;
+    }
 }
