@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.service;
 
+import com.ShopmeFrontEnd.ExceptionHandler.CustomerNotFoundException;
 import com.ShopmeFrontEnd.dao.CountryRepoFrontEnd;
 import com.ShopmeFrontEnd.dao.CustomerRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
@@ -122,15 +123,18 @@ public class CustomerServiceFrontEnd {
             customerInForm.setPassword(customerInDB.getPassword());
         }
 
-        // Since in the Editing form are not sending created time, enabled status, and verification code
+        // Since in the Editing form are not sending created time, enabled status, and verification code, resetPasswordToken
         // so if we update it then all these three values will be null.
         // so we have to add these also explicitly
         customerInForm.setEnabled(customerInDB.isEnabled());
         customerInForm.setCreatedTime(customerInDB.getCreatedTime());
         customerInForm.setVerificationCode(customerInDB.getVerificationCode());
         customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
+        customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
 
-        // This is to avoid glitch
+
+        // This is to avoid glitch, when Updating Customer Profile if users does not select any State then
+        // old state is saved otherwise null will be saved
         if(customerInForm.getState() == null){
             customerInForm.setState(customerInDB.getState());
         }
@@ -141,4 +145,38 @@ public class CustomerServiceFrontEnd {
         customerRepo.save(customerInForm);
     }
 
+    public String updateResetPasswordToken(String email) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findByEmail(email);
+        if(customer != null){
+            String token = RandomString.make(30);
+            customer.setResetPasswordToken(token);
+            //customerRepo.save(customer);
+            // Instead of saving whole object again to DB we will use update Query for setting the resetPasswordToken
+            customerRepo.updateResetPasswordTokenToGivenToken(customer.getId(), token);
+
+            return token;
+        }else {
+            throw new CustomerNotFoundException("Could not find any customer with the email " + email);
+        }
+    }
+
+    public Customer getByResetPasswordToken(String token){
+        return customerRepo.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(String token, String newPassword) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findByResetPasswordToken(token);
+        if(customer == null){
+            throw new CustomerNotFoundException("No Customer found: invalid Token");
+        }
+
+        String updatedpassword = passwordEncoder.encode(newPassword);
+
+        customerRepo.updatePassword(customer.getId(), updatedpassword);
+        customerRepo.setResetPasswordTokenToNull(customer.getId());
+
+    // Instead of saving whole object again to DB we will use update Query for setting the resetPasswordToken to nulll
+    // customer.setResetPasswordToken(null);
+    //   customerRepo.save(customer);
+    }
 }

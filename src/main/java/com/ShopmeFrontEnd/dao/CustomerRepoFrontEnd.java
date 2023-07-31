@@ -23,5 +23,19 @@ public interface CustomerRepoFrontEnd extends JpaRepository<Customer, Integer> {
     @Modifying
     void updateAuthenticationType(Integer customerId, AuthenticationType type);
 
+    @Query("UPDATE Customer c SET c.resetPasswordToken = ?2 WHERE c.id = ?1")
+    @Modifying
+    void updateResetPasswordTokenToGivenToken(Integer customerId, String token);
+
+    Customer findByResetPasswordToken(String resetPasswordToken);
+
+    @Query("UPDATE Customer c SET c.resetPasswordToken = null WHERE c.id = ?1")
+    @Modifying
+    void setResetPasswordTokenToNull(Integer customerId);
+
+    @Query("UPDATE Customer c SET c.password = ?2 WHERE c.id = ?1")
+    @Modifying
+    void updatePassword(Integer customerId, String password);
+
 
 }

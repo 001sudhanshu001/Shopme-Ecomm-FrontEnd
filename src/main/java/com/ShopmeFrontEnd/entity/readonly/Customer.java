@@ -68,6 +68,9 @@ public class Customer {
     @JoinColumn(name = "country_id")
     private Country country;
 
+    @Column(name = "reset_password_token", length = 30)
+    private String resetPasswordToken;
+
 
     @Transient
     public String getFullName() {
