@@ -9,6 +9,8 @@ import com.ShopmeFrontEnd.entity.readonly.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ShoppingCartService {
@@ -39,5 +41,10 @@ public class ShoppingCartService {
         cartRepo.save(cartItem);
 
         return updatedQuantity;
+    }
+
+    public List<CartItem> listCartItems(Customer customer){
+
+        return cartRepo.findByCustomer(customer);
     }
 }

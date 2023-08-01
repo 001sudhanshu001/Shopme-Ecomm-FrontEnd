@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 public class GetEmailOfAuthenticatedCustomer {
     public static String getEmail(HttpServletRequest request){
         Object principal = request.getUserPrincipal();
+
         if(principal == null){ // means Customer has not logged-in
             return null; // This is for Shopping cart if user tries to add to cart without log-in
         }
+
         String customerEmail = null;
 
         // if customer logged-in using DATABASE
