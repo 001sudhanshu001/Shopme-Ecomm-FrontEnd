@@ -77,4 +77,7 @@ public class Customer {
         return firstName + " " + lastName;
     }
 
+    public Customer(Integer id) {
+        this.id = id;
+    }
 }

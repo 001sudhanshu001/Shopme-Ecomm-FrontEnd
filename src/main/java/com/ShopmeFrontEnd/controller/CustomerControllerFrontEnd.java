@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.controller;
 
+import com.ShopmeFrontEnd.Util.GetEmailOfAuthenticatedCustomer;
 import com.ShopmeFrontEnd.Util.MailSenderUtil;
 import com.ShopmeFrontEnd.entity.readonly.Country;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
@@ -26,7 +27,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -119,7 +119,7 @@ public class CustomerControllerFrontEnd {
 //        System.out.println("Principal Name" + request.getUserPrincipal().getName());
 //        System.out.println(principalType);
 
-        String email = getEmailOfAuthenticatedCustomer(request);
+        String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
         Customer customer = customerService.getCustomerByEmail(email);
         List<Country> listCountries = customerService.listAllCountries();
 
@@ -129,23 +129,7 @@ public class CustomerControllerFrontEnd {
         return "customer/account_form";
     }
 
-    private String getEmailOfAuthenticatedCustomer(HttpServletRequest request){
-        Object principal = request.getUserPrincipal();
-        String customerEmail = null;
 
-        // if customer logged-in using DATABASE
-        if(principal instanceof UsernamePasswordAuthenticationToken
-                || principal instanceof RememberMeAuthenticationToken){
-            customerEmail = request.getUserPrincipal().getName();
-        }else if(principal instanceof OAuth2AuthenticationToken){
-            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
-
-            CustomerOauth2User oauth2User = (CustomerOauth2User) oauthToken.getPrincipal();
-            customerEmail = oauth2User.getEmail();
-        }
-
-        return customerEmail;
-    }
 
     @PostMapping("/update_account_details")
     public String updateAccountDetails(Model model, Customer customer, RedirectAttributes ra,
