@@ -7,6 +7,7 @@ import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
 import com.ShopmeFrontEnd.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,4 +63,16 @@ public class ShoppingCartRestController {
         }
     }
 
+    @DeleteMapping("/cart/remove/{productId}")
+    public String removeProduct(@PathVariable(name = "productId") Integer productId, HttpServletRequest request) {
+        try {
+            Customer customer = getAuthenticatedCustomer(request);
+            cartService.removeProduct(productId, customer);
+
+            return "The Product has been removed from your Shopping Cart";
+
+        } catch (CustomerNotFoundException e) {
+            return "You must login to remove product.";
+        }
+    }
 }

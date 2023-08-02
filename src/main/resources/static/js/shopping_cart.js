@@ -8,6 +8,12 @@ $(document).ready(function(){
         e.preventDefault();
         increaseQuantity($(this));
     })
+
+    $(".linkRemove").on("click", function(e){
+        e.preventDefault();
+        removeProduct($(this));
+    })
+
 });
 
 function decreaseQuantity(link){
@@ -63,14 +69,63 @@ function updateSubtotal(updatedSubtotal, productId) {
 
 // This is for Estemated subtotal
 function updateTotal() {
-    console.log("called");
+    console.log("UPDATED CALLED");
     total = 0.0;
+    productCount = 0;
 
     $(".subTotal").each(function(index, element) {
+        productCount++;
         total += parseFloat(element.innerHTML.replaceAll(",",""));
         console.log(total);
     });
 
-    formtedTotal = $.number(total, 2);    
-    $("#total").text(formtedTotal);
+    if(productCount < 1){
+        console.log("Product Count" + productCount);
+      //  location.reload();
+        showEmptyShoppingCart();
+    }else{
+        formatedTotal = $.number(total, 2);
+        $("#total").text(formatedTotal);
+    }
+
+    
+}
+
+function removeProduct(link) {
+    url = link.attr("href");
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        beforeSend: function(xhr){ // csrfHeaderName and csrfValue are provided in shopping_cart.html
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        }
+    }).done(function(response){
+        //location.reload(); Instead of relaoding we will remove that dive only by using JS
+        rowNumber = link.attr("rowNumber");
+        removeProductHTML(rowNumber);
+        updateTotal();
+        updateCountNumebers();
+
+        showModalDialog("Shopping Cart", response);
+
+    }).fail(function(){
+        showErrorModal("Error!!! Could not remove Product.");
+    })
+
+}
+
+function removeProductHTML(rowNumber){
+    $("#row" + rowNumber).remove();
+    $("#blankline" + rowNumber).remove();
+}
+
+function updateCountNumebers() {
+    $(".divCount").each(function(index, element){
+        element.innerHTML = "" + (index + 1); // because index starts from 0
+    });
+}
+
+function showEmptyShoppingCart() {
+	$("#sectionTotal").hide();
+	$("#sectionEmptyCartMessage").removeClass("d-none");
 }
