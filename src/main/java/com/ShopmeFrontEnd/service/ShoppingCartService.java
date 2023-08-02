@@ -3,18 +3,23 @@ package com.ShopmeFrontEnd.service;
 import com.ShopmeFrontEnd.AppllicationConstants.AppConstants;
 import com.ShopmeFrontEnd.ExceptionHandler.ShoppingCartException;
 import com.ShopmeFrontEnd.dao.CartItemRepo;
+import com.ShopmeFrontEnd.dao.ProductRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.CartItem;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ShoppingCartService {
     private final CartItemRepo cartRepo;
+    private final ProductRepoFrontEnd productRepo;
 
     public Integer addProduct(Integer productId, Integer quantity, Customer customer) throws ShoppingCartException {
         Integer updatedQuantity = quantity;
@@ -47,4 +52,13 @@ public class ShoppingCartService {
 
         return cartRepo.findByCustomer(customer);
     }
+
+    // When user updates the quantity in cart page then this method will be called
+    public float updateQuantity(Integer productId, Integer quantity, Customer customer){
+        cartRepo.updateQuantity(quantity, customer.getId(), productId);
+        Product product = productRepo.findById(productId).get();
+        float subTotal = product.getDiscountPrice() * quantity;
+        return subTotal;
+    }
+
 }

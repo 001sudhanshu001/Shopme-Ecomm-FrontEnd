@@ -8,7 +8,7 @@ $(document).ready(function(){
         if(newQuantity  > 0){
             quantityInput.val(newQuantity);
         }else{
-            showWarningModal("Minumum allowed Quantity is 1");
+            showWarningModal("Minimum allowed Quantity is 1");
         }
     })
 

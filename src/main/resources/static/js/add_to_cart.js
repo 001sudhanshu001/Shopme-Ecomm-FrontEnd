@@ -15,8 +15,8 @@ function addToCart(){
         beforeSend: function(xhr){ // csrfHeaderName and csrfValue are provided in product_details.html
             xhr.setRequestHeader(csrfHeaderName, csrfValue);
         }
-    }).done(function(respponse){
-        showModalDialog("Shopping Cart", respponse);
+    }).done(function(response){
+        showModalDialog("Shopping Cart", response);
     }).fail(function(){
         showErrorModal("Error!!! Could not add product to shopping cart.");
     })
