@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,10 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+       http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+               .and()
                 .authorizeRequests()
-                .mvcMatchers("/account_details", "/update_account_details", "/cart").authenticated()
+                .mvcMatchers("/account_details", "/update_account_details", "/cart",
+                              "/address_bool/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -72,7 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                     .key("123456789afjknnwje@nturn_AVNjdvvj")
                     .tokenValiditySeconds(14 * 24 * 60 * 60);
-
+//                .and()
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 
     public DaoAuthenticationProvider daoAuthenticationProvider(){

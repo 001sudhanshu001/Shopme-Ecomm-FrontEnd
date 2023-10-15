@@ -8,12 +8,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
 </head>
 <body>
 
     <div th:fragment = "footer" class="text-center m-3">
-        <p>Shopme Control Panel - Copyright &copy; Shopme</p>
+<!--        <p>Shopme Control Panel - Copyright &copy; Shopme</p>-->
+        <p>[[${COPYRIGHT}]]</p>
     </div>
 
 
@@ -22,7 +22,6 @@
        th:href="@{ ${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
         [[${label}]]
     </a>
-
 
     <!---------------------------------- Page navigation -------------------------------->
     <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
@@ -83,6 +82,26 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="confirm_modal" class="modal fade text-center" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <span id="confirmText"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="" id="yesButton">Yes</a>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
                 </div>
             </div>
         </div>

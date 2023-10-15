@@ -19,8 +19,6 @@ public class StateRestControllerFrontEnd {
     public List<StateDto> listByCountry(@PathVariable("id") Integer countryId){
         List<State> listStates = stateRepo.findByCountryOrderByNameAsc(new Country(countryId));
         List<StateDto> result = new ArrayList<>();
-        System.out.println("----------------------------------");
-        System.out.println("List States by country");
 
         for(State state : listStates){
             result.add(new StateDto(state.getId(), state.getName()));

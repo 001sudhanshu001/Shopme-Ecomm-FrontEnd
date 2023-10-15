@@ -12,16 +12,18 @@
   <div class="row">
      <div class="col-sm">
         <div>
+<!--            <img id="bigImage" th:src="@{/images/ShopmeAdminSmall.png}"/>-->
           <img id="bigImage" th:src="@{${product.mainImagePath}}" alt="Product Image" index="0"/>
         </div>
           <div class="row justify-content-center"> <!-- Showing All images in small-->
               <div class="m-2 border border-secondary">
+<!--                  <img th:src="@{/images/ShopmeAdminSmall.png}"/>-->
                   <img th:src="@{${product.mainImagePath}}" height="50px" class="image-thumbnail" index="0">
               </div>
               <th:block th:each="extraImage, status : ${product.images}">
                   <div class="m-2 border border-secondary">
-                      <img class="image-thumbnail" th:src="@{${extraImage.imagePath}}" height="50px"
-                            th:index="${status.count}"/>
+                      <img class="image-thumbnail" th:src="@{${extraImage.imagePath}}" height="50px" th:index="${status.count}"/>
+<!--                      <img th:src="@{/images/ShopmeAdminSmall.png}"/>-->
                   </div>
               </th:block>
          </div>
@@ -37,12 +39,12 @@
 
           <div>
               List Price:
-              <span th:if="${product.discountPercent <= 0}">$[[${product.price}]]</span>
-              <del th:if="${product.discountPercent > 0}">$[[${product.price}]]</del>
+              <span th:if="${product.discountPercent <= 0}">₹[[${product.price}]]</span>
+              <del th:if="${product.discountPercent > 0}">₹[[${product.price}]]</del>
           </div>
           <div th:if="${product.discountPercent > 0}">
               Price:
-              <span style="font-size:larger; color:darkred" >$[[${product.discountPrice}]]</span>&nbsp;
+              <span style="font-size:larger; color:darkred" >₹[[${product.discountPrice}]]</span>&nbsp;
               ([[${product.discountPercent}]] % off)
           </div>
           <div>&nbsp;</div>

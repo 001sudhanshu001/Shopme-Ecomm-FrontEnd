@@ -64,9 +64,7 @@
 
                                 <div>
                                     <span>&nbsp;</span>
-<!--                                    <span th:id="'subtotal' + ${item.product.id}" class="h4 subTotal">-->
-<!--						                [[${#numbers.formatDecimal(item.subTotal, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]-->
-<!--						            </span>-->
+
                                     <span th:id="'subTotal' + ${item.product.id}" class="h4 subTotal">[[${item.subTotal}]]</span>
                                 </div>
                             </div>
@@ -81,9 +79,9 @@
                     <span class="h3">Estimated Total:</span>
                 </div>
                 <div class="mt-2">
-                    <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">
+<!--                    <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">-->
                        <span id="total" class="h2">[[${estimatedTotal}]] [[${CURRENCY_SYMBOL}]]</span>
-                    </span>
+<!--                    </span>-->
                 </div>
                 <div class="mt-2">
                     <button class="btn btn-danger p3 mt-2">Check Out</button>

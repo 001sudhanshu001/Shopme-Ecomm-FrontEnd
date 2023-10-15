@@ -22,8 +22,7 @@ import java.util.List;
 public class CustomerServiceFrontEnd {
     // This is used to fetch all the countries from DB to show into Customer Registration Page
     private final CountryRepoFrontEnd countryRepo;
-    @Autowired
-    private CustomerRepoFrontEnd customerRepo;
+    private final CustomerRepoFrontEnd customerRepo;
     private final PasswordEncoder passwordEncoder;
 
     public List<Country> listAllCountries(){

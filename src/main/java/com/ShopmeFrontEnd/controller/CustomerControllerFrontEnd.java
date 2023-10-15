@@ -139,6 +139,14 @@ public class CustomerControllerFrontEnd {
         ra.addFlashAttribute("message", "Your Account Details have been updated");
 
         updateNameForAuthenticatedCustomer(customer, request);
+
+        String redirectOption = request.getParameter("redirect");
+
+        String redirectURL = "redirect:/account_details";
+
+        if ("address_book".equals(redirectOption)) {
+            redirectURL = "redirect:/address_book";
+        }
         // To show updated principal.fullName immediately, Because name is Loaded by Spring Security at then time of
         // login only, so the updated name will be displayed only when user do again log-in
         // So to avoid this we use this method
@@ -146,7 +154,7 @@ public class CustomerControllerFrontEnd {
         // We have to update CustomerOauth2User class and add a setFullName() method, because we were using customer name
         // from his Google account(if he uses Google OAuth)
         
-        return "redirect:/account_details";
+        return redirectURL;
     }
 
     private void updateNameForAuthenticatedCustomer(Customer customer, HttpServletRequest request) {
