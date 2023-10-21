@@ -1,0 +1,123 @@
+2023-10-21 14:40:07.332  INFO 8231 --- [restartedMain] com.ShopMe.ShopMeApplication             : Starting ShopMeApplication using Java 17.0.8 on sudhanshupc with PID 8231 (/media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopMe/ShopMe/target/classes started by sudhanshu in /media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopmeFrontEnd/ShopmeFrontEnd)
+2023-10-21 14:40:07.333  INFO 8231 --- [restartedMain] com.ShopMe.ShopMeApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-10-21 14:40:07.377  INFO 8231 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-10-21 14:40:07.377  INFO 8231 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-10-21 14:40:07.775  INFO 8231 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-21 14:40:07.818  INFO 8231 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 12 JPA repository interfaces.
+2023-10-21 14:40:08.162  INFO 8231 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-10-21 14:40:08.167  INFO 8231 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-21 14:40:08.167  INFO 8231 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.73]
+2023-10-21 14:40:08.199  INFO 8231 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-21 14:40:08.199  INFO 8231 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 822 ms
+2023-10-21 14:40:08.281  INFO 8231 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-21 14:40:08.305  INFO 8231 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-10-21 14:40:08.385  INFO 8231 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-10-21 14:40:08.449  INFO 8231 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Starting...
+2023-10-21 14:40:08.634  INFO 8231 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Start completed.
+2023-10-21 14:40:08.643  INFO 8231 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-10-21 14:40:09.268  INFO 8231 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-21 14:40:09.274  INFO 8231 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:40:09.577  WARN 8231 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-21 14:40:09.778  WARN 8231 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shippingRateController' defined in file [/media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopMe/ShopMe/target/classes/com/ShopMe/Controller/ShippingRateController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'java.lang.String' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2023-10-21 14:40:09.780  INFO 8231 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:40:09.782  INFO 8231 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown initiated...
+2023-10-21 14:40:09.787  INFO 8231 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown completed.
+2023-10-21 14:40:09.789  INFO 8231 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-21 14:40:09.799  INFO 8231 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-10-21 14:40:09.812 ERROR 8231 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.ShopMe.Controller.ShippingRateController required a bean of type 'java.lang.String' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.String' in your configuration.
+
+2023-10-21 14:40:25.620  INFO 8370 --- [restartedMain] com.ShopMe.ShopMeApplication             : Starting ShopMeApplication using Java 17.0.8 on sudhanshupc with PID 8370 (/media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopMe/ShopMe/target/classes started by sudhanshu in /media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopmeFrontEnd/ShopmeFrontEnd)
+2023-10-21 14:40:25.621  INFO 8370 --- [restartedMain] com.ShopMe.ShopMeApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-10-21 14:40:25.660  INFO 8370 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-10-21 14:40:25.661  INFO 8370 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-10-21 14:40:26.024  INFO 8370 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-21 14:40:26.069  INFO 8370 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 12 JPA repository interfaces.
+2023-10-21 14:40:26.410  INFO 8370 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-10-21 14:40:26.414  INFO 8370 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-21 14:40:26.414  INFO 8370 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.73]
+2023-10-21 14:40:26.443  INFO 8370 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-21 14:40:26.443  INFO 8370 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 782 ms
+2023-10-21 14:40:26.519  INFO 8370 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-21 14:40:26.538  INFO 8370 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-10-21 14:40:26.609  INFO 8370 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-10-21 14:40:26.669  INFO 8370 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Starting...
+2023-10-21 14:40:26.826  INFO 8370 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Start completed.
+2023-10-21 14:40:26.834  INFO 8370 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-10-21 14:40:27.400  INFO 8370 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-21 14:40:27.405  INFO 8370 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:40:27.685  WARN 8370 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-21 14:40:27.881  WARN 8370 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shippingRateController' defined in file [/media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopMe/ShopMe/target/classes/com/ShopMe/Controller/ShippingRateController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'java.lang.String' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2023-10-21 14:40:27.883  INFO 8370 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:40:27.884  INFO 8370 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown initiated...
+2023-10-21 14:40:27.888  INFO 8370 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown completed.
+2023-10-21 14:40:27.891  INFO 8370 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-21 14:40:27.900  INFO 8370 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-10-21 14:40:27.914 ERROR 8370 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.ShopMe.Controller.ShippingRateController required a bean of type 'java.lang.String' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.String' in your configuration.
+
+2023-10-21 14:41:51.367  INFO 8503 --- [restartedMain] com.ShopMe.ShopMeApplication             : Starting ShopMeApplication using Java 17.0.8 on sudhanshupc with PID 8503 (/media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopMe/ShopMe/target/classes started by sudhanshu in /media/sudhanshu/New Volume(F)/MyBackup/D/E-Commerce/ShopmeFrontEnd/ShopmeFrontEnd)
+2023-10-21 14:41:51.368  INFO 8503 --- [restartedMain] com.ShopMe.ShopMeApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-10-21 14:41:51.405  INFO 8503 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-10-21 14:41:51.405  INFO 8503 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-10-21 14:41:51.773  INFO 8503 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-21 14:41:51.816  INFO 8503 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38 ms. Found 12 JPA repository interfaces.
+2023-10-21 14:41:52.157  INFO 8503 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-10-21 14:41:52.162  INFO 8503 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-21 14:41:52.163  INFO 8503 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.73]
+2023-10-21 14:41:52.192  INFO 8503 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-21 14:41:52.193  INFO 8503 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 787 ms
+2023-10-21 14:41:52.267  INFO 8503 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-21 14:41:52.290  INFO 8503 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-10-21 14:41:52.359  INFO 8503 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-10-21 14:41:52.421  INFO 8503 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Starting...
+2023-10-21 14:41:52.584  INFO 8503 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Start completed.
+2023-10-21 14:41:52.593  INFO 8503 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-10-21 14:41:53.188  INFO 8503 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-21 14:41:53.193  INFO 8503 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:41:53.490  WARN 8503 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-21 14:41:53.779  WARN 8503 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/images/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-21 14:41:53.780  INFO 8503 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/images/**']
+2023-10-21 14:41:53.780  WARN 8503 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/js/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-21 14:41:53.780  INFO 8503 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/js/**']
+2023-10-21 14:41:53.780  WARN 8503 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/webjars/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-21 14:41:53.780  INFO 8503 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/webjars/**']
+2023-10-21 14:41:53.814  INFO 8503 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@53cab813, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3de0285b, org.springframework.security.web.context.SecurityContextPersistenceFilter@6eb72888, org.springframework.security.web.header.HeaderWriterFilter@6a57c379, org.springframework.security.web.csrf.CsrfFilter@2668f40a, org.springframework.security.web.authentication.logout.LogoutFilter@782be934, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6b9609c2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@51fd558a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55931b9a, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@70bd8583, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@640ea161, org.springframework.security.web.session.SessionManagementFilter@6abf0f30, org.springframework.security.web.access.ExceptionTranslationFilter@b87854e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6d1d9ac0]
+2023-10-21 14:41:53.904  INFO 8503 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-10-21 14:41:54.245  INFO 8503 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-10-21 14:41:54.266  INFO 8503 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-10-21 14:41:54.274  INFO 8503 --- [restartedMain] com.ShopMe.ShopMeApplication             : Started ShopMeApplication in 3.133 seconds (JVM running for 3.523)
+2023-10-21 14:41:59.539  INFO 8503 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-21 14:41:59.539  INFO 8503 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-21 14:41:59.540  INFO 8503 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-10-21 14:43:39.178  INFO 8503 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-21 14:43:39.180  INFO 8503 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown initiated...
+2023-10-21 14:43:39.183  INFO 8503 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : ecomm_shopme - Shutdown completed.

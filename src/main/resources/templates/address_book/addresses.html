@@ -25,6 +25,9 @@
 
 							<th:block th:unless="${usePrimaryAddressAsDefault}">
 								<a th:href="@{'/address_book/default/0'}">[Set as default]</a>
+<!--								<a th:unless="${param.redirect}" th:href="@{'/address_book/default/0'}">[Set as default]</a>-->
+<!--								<a th:if="${param.redirect}" th:href="@{'/address_book/default/0?redirect=' + ${param.redirect}}">[Set as default]</a>-->
+
 								<!--									<a th:if="${param.redirect != null && param.redirect[0] == 'cart'}" th:href="@{'/address_book/default/' + ${address.id}}">[Set as default]</a>-->
 								<!--									<a th:if="${redirectedFromCheckoutPage}" th:href="@{'/address_book/default/' + ${address.id} + '?redirect=checkout'}">[Choose]</a>-->
 							</th:block>

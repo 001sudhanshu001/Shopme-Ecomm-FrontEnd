@@ -142,6 +142,13 @@ public class AddressController {
 //            redirectURL = "redirect:/checkout";
 //        }
 
+        if ("address_book".equals(redirectOption)) {
+            redirectURL = "redirect:/address_book";
+        }
+//        else if(redirectOption.equals("cart")){
+//            redirectURL = "redirect:/cart";
+//        }
+
         return redirectURL;
     }
 

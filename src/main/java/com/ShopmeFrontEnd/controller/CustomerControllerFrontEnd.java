@@ -146,6 +146,8 @@ public class CustomerControllerFrontEnd {
 
         if ("address_book".equals(redirectOption)) {
             redirectURL = "redirect:/address_book";
+        }else if(redirectOption.equals("cart")){
+            redirectURL = "redirect:/cart";
         }
         // To show updated principal.fullName immediately, Because name is Loaded by Spring Security at then time of
         // login only, so the updated name will be displayed only when user do again log-in
