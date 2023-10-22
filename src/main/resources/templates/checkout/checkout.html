@@ -102,6 +102,19 @@
 	<div th:replace="navigation :: footer_menu"></div>
 	
 </div>
+
+<script>
+	contextPath = "[[@{/}]]";
+	var csrfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+
+	$(document).ready(function() {
+		$("#radioCOD").on("click", function() {
+			$("#buttonSubmit").removeClass("d-none");
+		});
+	});
+</script>
+
 </body>
 <!--<script th:src="@{https://www.paypal.com/sdk/js(client-id=${paypalClientId},currency=${currencyCode})}"></script>-->
 <script type="text/javascript" th:src="@{/js/common_modal.js}"></script>

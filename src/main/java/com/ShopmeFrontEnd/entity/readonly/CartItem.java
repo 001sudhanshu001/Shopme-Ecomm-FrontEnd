@@ -29,12 +29,14 @@ public class CartItem {
         return shippingCost;
     }
 
+    @Transient
     public void setShippingCost(float shippingCost) {
         this.shippingCost = shippingCost;
     }
 
     @Transient
     private float shippingCost;
+
 
     @Transient
     public float getSubTotal() {

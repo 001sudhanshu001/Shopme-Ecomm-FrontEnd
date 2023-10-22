@@ -24,14 +24,18 @@
                         </div>
 
                         <div class="col-3">
-                            <img th:src="@{${item.product.mainImagePath}}" class="img-fluid">
+                            <a th:href="@{'/p/' + ${item.product.alias}}" target="_blank" th:title="${item.product.name}">
+                                <img th:src="@{${item.product.mainImagePath}}" class="img-fluid">
+                            </a>
+
                         </div>
                         <div class="col-6">
                             <div>
                                 <a th:href="@{'/p/' + ${item.product.alias}}" target="_blank" th:title="${item.product.name}">
-                                    <b>[[${item.product.shortName}]]</b>
+                                    <b class="h3">[[${item.product.shortName}]]</b>
                                 </a>
                             </div>
+                            <br>
 
                             <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.product.id})"></div>
 
