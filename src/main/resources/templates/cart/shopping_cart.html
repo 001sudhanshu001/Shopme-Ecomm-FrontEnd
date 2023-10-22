@@ -65,7 +65,7 @@
                                 <div>
                                     <span>&nbsp;</span>
 
-                                    <span th:id="'subTotal' + ${item.product.id}" class="h4 subTotal">[[${item.subTotal}]]</span>
+                                    <span th:id="'subTotal' + ${item.product.id}" class="h4 subTotal">[[${item.subTotal}]]</span><span class="h4"> ₹</span>
                                 </div>
                             </div>
                         </div>
@@ -80,12 +80,14 @@
                 </div>
                 <div class="mt-2">
 <!--                    <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">-->
-                       <span id="total" class="h2">[[${estimatedTotal}]] [[${CURRENCY_SYMBOL}]]</span>
+                       <span id="total" class="h2">[[${estimatedTotal}]] </span><span class="h4"> ₹</span>
 <!--                    </span>-->
                 </div>
                 <div class="mt-2">
                     <div th:if="${shippingSupported}">
-                        <button class="btn btn-danger p3 mt-2">Check Out</button>
+                        <form th:action="@{/checkout}">
+                            <button type="submit" class="btn btn-danger p3 mt-2">Check Out</button>
+                        </form>
                     </div>
                     <br>
                     <div th:unless="${shippingSupported}">

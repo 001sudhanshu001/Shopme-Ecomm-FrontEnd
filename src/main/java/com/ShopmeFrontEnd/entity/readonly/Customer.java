@@ -12,7 +12,6 @@ import java.util.Date;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Customer {
 
     @Id
@@ -79,6 +78,19 @@ public class Customer {
 
     public Customer(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return
+                 firstName + " " + lastName+
+                         ", " +addressLine1 +
+                         ", " +addressLine2 +
+                         ", " + city +
+                         ", " +state +
+                 "," + country.getName() +
+                ", Postal Code : " + postalCode +
+                ", Phone Number : " + phoneNumber ;
     }
 
     @Transient

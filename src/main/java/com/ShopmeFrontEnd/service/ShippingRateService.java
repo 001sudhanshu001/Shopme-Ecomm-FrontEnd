@@ -1,11 +1,6 @@
 package com.ShopmeFrontEnd.service;
 
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import javax.transaction.Transactional;
-
 import com.ShopmeFrontEnd.dao.CountryRepoFrontEnd;
 import com.ShopmeFrontEnd.dao.ShippingRateRepo;
 import com.ShopmeFrontEnd.entity.readonly.Address;
@@ -13,8 +8,10 @@ import com.ShopmeFrontEnd.entity.readonly.Country;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.ShippingRate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Service

@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,12 +42,18 @@ public class CustomerControllerFrontEnd {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        List<Country> countries = customerService.listAllCountries();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("listCountries", countries);
-        model.addAttribute("pageTitle", "Customer Registration");
-        model.addAttribute("customer", new Customer());
-        return "register/register_form";
+        if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            List<Country> countries = customerService.listAllCountries();
+
+            model.addAttribute("listCountries", countries);
+            model.addAttribute("pageTitle", "Customer Registration");
+            model.addAttribute("customer", new Customer());
+            return "register/register_form";
+        }
+
+        return "redirect:/";
     }
 
     @PostMapping("/create_customer")

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shopping Cart', 'none')" />
+<body>
+<div class="container-fluid">
+	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+
+	<div class="text-center">
+		<h2>Checkout</h2>
+	</div>
+
+	<div class="row m-1">
+		<div class="col-sm-8">
+			<div class="card">
+				<div class="card-header"><h5>Shipping Information</h5></div>
+				<div class="card-body">
+					<p>
+						<b>Ship to:</b>&nbsp; [[${shippingAddress}]]
+						<a th:href="@{/address_book(redirect=checkout)}">[Ship to another address]</a>
+					</p>
+					<p>
+						<b>Days to deliver: </b>[[${checkoutInfo.deliverDays}]] day(s)
+					</p>
+					<p>
+						<b>Expected deliver date: </b>[[${#dates.format(checkoutInfo.deliverDate, 'E, dd MMM yyyy')}]]
+					</p>
+				</div>
+			</div>		
+
+			<div class="card mt-3 mb-3">
+				<div class="card-header"><h5>Payment Method</h5></div>
+				<div class="card-body">
+					<div th:if="${checkoutInfo.codSupported}">
+						<form th:action="@{/place_order}" method="post">
+							<p>
+								<input type="radio" name="paymentMethod" id="radioCOD" value="COD" /> Cash on Delivery (COD)
+								&nbsp;
+								<button class="btn btn-primary d-none" type="submit" id="buttonSubmit">Place Order with COD</button>
+							</p>
+						</form>
+					</div>
+					
+					<div id="paypal-button-container"></div>
+					<form th:action="@{/process_paypal_order}" method="post" id="paypalForm">
+							<input type="hidden" name="orderId" id="orderId" />
+							<input type="hidden" name="paymentMethod" value="PAYPAL" />
+					</form>
+				</div>			
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card">
+				<div class="card-header"><h5>Order Summary</h5></div>
+				<div class="card-body">
+					<div>
+					<table>
+						<th:block th:each="item : ${cartItems}">
+						<tr th:with="product = ${item.product}">
+							<td>[[${item.quantity}]] X &nbsp;&nbsp;</td>
+							<td width="70%">
+								<a th:href="@{'/p/' + ${product.alias}}" target="_blank">
+									[[${product.shortName}]]
+								</a>
+								<br/>
+								<small>Ship: [[${item.shippingCost}]]</small>
+<!--								<small>Ship: <div th:replace="fragments :: format_currency(${item.shippingCost})"></div></small>-->
+							</td>
+							<td>
+								<small>₹ [[${item.subTotal}]]</small>
+<!--								<div th:replace="fragments :: format_currency(${item.subtotal})"></div>-->
+							</td>
+						</tr>
+						</th:block>
+						<tr><td colspan="3"><hr/></tr>
+					</table>
+					</div>
+
+					<div class="row mt-2">
+						<div class="col">Product Total: </div>
+						<div class="col">[[${checkoutInfo.productTotal}]]</div>
+					</div>
+
+					<div class="row mt-2">
+						<div class="col">Shipping Total: </div>
+						<div class="col">[[${checkoutInfo.shippingCostTotal}]]</div>
+<!--						<div class="col"><div th:replace="fragments :: format_currency(${checkoutInfo.shippingCostTotal})"></div></div>-->
+					</div>
+
+					<div class="row mt-2">
+						<div class="col"><b>Payment Total: </b> </div>
+						<div class="col"><b>[[${checkoutInfo.paymentTotal}]]</b></div>
+						<!--<div class="col"><b><div th:replace="fragments :: format_currency(${checkoutInfo.paymentTotal})"></div></b></div>-->
+					</div>										
+				</div>
+			</div>		
+		</div>		
+	</div>
+
+	<div th:replace="fragments :: modal_dialog"></div>
+	<div th:replace="navigation :: footer_menu"></div>
+	
+</div>
+</body>
+<!--<script th:src="@{https://www.paypal.com/sdk/js(client-id=${paypalClientId},currency=${currencyCode})}"></script>-->
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+
+</html>

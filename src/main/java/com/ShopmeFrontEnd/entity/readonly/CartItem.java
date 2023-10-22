@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "cart_items")
 @Getter @Setter
 @NoArgsConstructor
-@ToString
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +25,30 @@ public class CartItem {
     private Product product;
     private int quantity;
 
+    public float getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(float shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
+    @Transient
+    private float shippingCost;
+
     @Transient
     public float getSubTotal() {
         return product.getDiscountPrice() * quantity;
     }
 
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", customer=" + customer.getFullName() +
+                ", product=" + product.getName() +
+                ", quantity=" + quantity +
+                ", shippingCost=" + shippingCost +
+                '}';
+    }
 }
