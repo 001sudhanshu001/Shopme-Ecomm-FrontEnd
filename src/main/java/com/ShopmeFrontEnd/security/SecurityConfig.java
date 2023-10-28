@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                .and()
                 .authorizeRequests()
-                .mvcMatchers("/account_details", "/update_account_details", "/cart",
+                .mvcMatchers("/account_details", "/update_account_details", "/cart", "/orders/**",
                               "/address_bool/**", "/checkout", "/place_order").authenticated()
                 .anyRequest().permitAll()
                 .and()

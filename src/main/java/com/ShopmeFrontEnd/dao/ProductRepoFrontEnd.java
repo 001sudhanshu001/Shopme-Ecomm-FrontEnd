@@ -16,9 +16,10 @@ public interface ProductRepoFrontEnd extends JpaRepository<Product, Integer> {
     Product findByAlias(String alias);
 
     // Since it is Mysql Query, so we used table name and column names, instead of Entity and field names
-     @Query(value = "SELECT * FROM products WHERE enabled = true AND "
-             + "MATCH(name, short_description, full_description) AGAINST (?1)",
-             nativeQuery = true)
+//     @Query(value = "SELECT * FROM products WHERE enabled = true AND "
+//             + "MATCH(name, short_description, full_description) AGAINST (?1)",
+//             nativeQuery = true)
+    @Query("SELECT p FROM Product p WHERE CONCAT(p.name, ' ', p.shortDescription, ' ', p.shortDescription) LIKE %?1%")
      Page<Product> search(String keyword, Pageable pageable);
 }
 

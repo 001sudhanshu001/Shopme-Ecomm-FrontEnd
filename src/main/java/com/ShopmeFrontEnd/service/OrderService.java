@@ -12,6 +12,10 @@ import com.ShopmeFrontEnd.entity.readonly.order.OrderStatus;
 import com.ShopmeFrontEnd.entity.readonly.order.PaymentMethod;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,22 +25,12 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+    public static final int ORDERS_PER_PAGE = 5;
 
     private final OrderRepo orderRepo;
     public Order createOrder(Customer customer, Address address, List<CartItem> cartItems,
                              PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
-        Order newOrder = new Order();
-        newOrder.setOrderTime(new Date());
-        newOrder.setStatus(OrderStatus.NEW);
-        newOrder.setCustomer(customer);
-        newOrder.setProductCost(checkoutInfo.getProductCost());
-        newOrder.setSubtotal(checkoutInfo.getProductTotal());
-        newOrder.setTotal(checkoutInfo.getPaymentTotal());
-        newOrder.setShippingCost(checkoutInfo.getShippingCostTotal());
-        newOrder.setTax(0.0f);
-        newOrder.setPaymentMethod(paymentMethod);
-        newOrder.setDeliveryDays(checkoutInfo.getDeliverDays());
-        newOrder.setDeliveryDate(checkoutInfo.getDeliverDate());
+        Order newOrder = getOrder(customer, paymentMethod, checkoutInfo);
 
         if(address == null) {
             newOrder.copyAddressFromCustomer();
@@ -62,6 +56,39 @@ public class OrderService {
 
         return orderRepo.save(newOrder);
 
+
+    }
+
+    private static Order getOrder(Customer customer, PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
+        Order newOrder = new Order();
+        newOrder.setOrderTime(new Date());
+        newOrder.setStatus(OrderStatus.NEW);
+        newOrder.setCustomer(customer);
+        newOrder.setProductCost(checkoutInfo.getProductCost());
+        newOrder.setSubtotal(checkoutInfo.getProductTotal());
+        newOrder.setTotal(checkoutInfo.getPaymentTotal());
+        newOrder.setShippingCost(checkoutInfo.getShippingCostTotal());
+        newOrder.setTax(0.0f);
+        newOrder.setPaymentMethod(paymentMethod);
+        newOrder.setDeliveryDays(checkoutInfo.getDeliverDays());
+        newOrder.setDeliveryDate(checkoutInfo.getDeliverDate());
+        return newOrder;
+    }
+
+    public Page<Order> listForCustomerByPage(Customer customer, int pageNum,
+                                             String sortField, String sortDir, String orderKeyword) {
+
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE, sort);
+
+        if (orderKeyword != null) {
+            System.out.println("FETCHING ORDER DETAILS");
+            return orderRepo.findAll(orderKeyword, customer.getId(), pageable);
+        }
+
+        return orderRepo.findAll(customer.getId(), pageable);
 
     }
 }
