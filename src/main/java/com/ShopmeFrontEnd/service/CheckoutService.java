@@ -27,7 +27,7 @@ public class CheckoutService{
         float productCost = calculateProductCost(cartItems);
         float productTotal = calculateProductTotal(cartItems);
         float shippingCost = (int) calculateShippingCost(cartItems, shippingRate, 138);
-        float paymentTotal = productTotal;
+        float paymentTotal = productTotal + shippingCost;
 
         System.out.println("Payment : " + paymentTotal);
         System.out.println("Shipping : " + shippingCost);

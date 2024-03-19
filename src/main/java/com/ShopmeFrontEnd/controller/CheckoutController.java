@@ -61,11 +61,6 @@ public class CheckoutController {
         return "checkout/checkout";
     }
 
-    private Customer getAuthenticatedCustomer(HttpServletRequest request) {
-        String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
-        return customerService.getCustomerByEmail(email);
-    }
-
     @PostMapping("/place_order")
     public String placeOrder(HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String paymentType = request.getParameter("paymentMethod"); // Fetched from checkout.html name = "paymentMethod" and its value is COD
@@ -125,5 +120,10 @@ public class CheckoutController {
 
         mailSender.send(message);
 
+    }
+
+    private Customer getAuthenticatedCustomer(HttpServletRequest request) {
+        String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
+        return customerService.getCustomerByEmail(email);
     }
 }

@@ -1,5 +1,5 @@
 server:
-    port: 8085
+    port: 2525
     servlet:
         context:
             path: /Shopme
@@ -23,8 +23,8 @@ spring:
             client:
                 registration:
                     google:
-                        client-id: 263056919918-0ease87oocd2k2oeqk75g6dj0ih3ja71.apps.googleusercontent.com
-                        client-secret: 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
+                        client-id:  263056919918-q5havljgc69uqu6q06ej7d4a3ng412k9.apps.googleusercontent.com #263056919918-0ease87oocd2k2oeqk75g6dj0ih3ja71.apps.googleusercontent.com
+                        client-secret:  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 #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
                         scope:
                         - email
                         - profile

@@ -14,8 +14,8 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     Page<Order> findAll(String keyword, Integer customerId, Pageable pageable);
 
     @Query("SELECT o FROM Order o WHERE o.customer.id = ?1")
-    public Page<Order> findAll(Integer customerId, Pageable pageable);
+    Page<Order> findAll(Integer customerId, Pageable pageable);
 
-    public Order findByIdAndCustomer(Integer id, Customer customer);
+    Order findByIdAndCustomer(Integer id, Customer customer);
 
 }

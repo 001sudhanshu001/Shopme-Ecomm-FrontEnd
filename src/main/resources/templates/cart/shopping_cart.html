@@ -8,7 +8,8 @@
         <div th:replace="navigation :: search_nav"></div>
 
         <div class="text-center">
-            <h1>Your Shopping Cart</h1>
+            <h1>Your Shopping Cart <i class="fas fa-shopping-cart"></i>
+            </h1>
         </div>
 
         <div class="row m-1">
@@ -27,6 +28,7 @@
                             <a th:href="@{'/p/' + ${item.product.alias}}" target="_blank" th:title="${item.product.name}">
                                 <img th:src="@{${item.product.mainImagePath}}" class="img-fluid">
                             </a>
+                            <span>Price : [[${item.product.discountPrice}]] ₹</span>
 
                         </div>
                         <div class="col-6">
@@ -40,7 +42,7 @@
                             <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${item.product.id})"></div>
 
                             <div>
-                                <span>X&nbsp;</span>
+<!--                                <span>X&nbsp;</span>-->
 
                                 <th:block th:if="${item.product.discountPercent &lt;= 0}">
                                     <span>

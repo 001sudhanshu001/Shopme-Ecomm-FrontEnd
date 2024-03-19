@@ -1,17 +1,15 @@
 package com.ShopmeFrontEnd.service;
 
+import com.ShopmeFrontEnd.ExceptionHandler.OrderNotFoundException;
 import com.ShopmeFrontEnd.dao.OrderRepo;
+import com.ShopmeFrontEnd.dto.OrderReturnRequest;
 import com.ShopmeFrontEnd.entity.CheckoutInfo;
 import com.ShopmeFrontEnd.entity.readonly.Address;
 import com.ShopmeFrontEnd.entity.readonly.CartItem;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
-import com.ShopmeFrontEnd.entity.readonly.order.Order;
-import com.ShopmeFrontEnd.entity.readonly.order.OrderDetail;
-import com.ShopmeFrontEnd.entity.readonly.order.OrderStatus;
-import com.ShopmeFrontEnd.entity.readonly.order.PaymentMethod;
+import com.ShopmeFrontEnd.entity.readonly.order.*;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +73,11 @@ public class OrderService {
         return newOrder;
     }
 
+    public Order getOrder(Integer id, Customer customer) {
+        return orderRepo.findByIdAndCustomer(id, customer);
+    }
+
+
     public Page<Order> listForCustomerByPage(Customer customer, int pageNum,
                                              String sortField, String sortDir, String orderKeyword) {
 
@@ -90,5 +93,34 @@ public class OrderService {
 
         return orderRepo.findAll(customer.getId(), pageable);
 
+    }
+
+    public void setOrderReturnRequested(OrderReturnRequest returnRequested, Customer customer) throws OrderNotFoundException {
+        Order order = orderRepo.findByIdAndCustomer(returnRequested.getOrderId(), customer);
+        if(order == null) {
+            throw  new OrderNotFoundException("Order Id " + returnRequested.getOrderId() + " not found");
+        }
+
+        if(order.isReturnRequested()) {
+            return;
+        }
+
+        OrderTrack track = new OrderTrack();
+        track.setOrder(order);
+        track.setUpdatedTime(new Date());
+        track.setStatus((OrderStatus.RETURN_REQUESTED));
+
+        String notes =  "Reason : " + returnRequested.getReason();
+        if(! "".equals(returnRequested.getReason())) {
+            notes += ". " + returnRequested.getNote();
+        }
+
+        track.setNotes(notes);
+
+        order.getOrderTracks().add(track);
+
+        order.setStatus(OrderStatus.RETURN_REQUESTED);
+
+        orderRepo.save(order);
     }
 }

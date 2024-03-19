@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:ht="http://www.thymeleaf.org">
 <head th:replace="fragments :: page_head('My Orders', 'none')" />
 <body>
 <div class="container-fluid">
@@ -53,13 +53,13 @@
              th:href="@{'/orders/detail/' + ${order.id}}"
              title="View details of this order"></a>
 
-<!--          <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">-->
-<!--            &nbsp;&nbsp;&nbsp;-->
-<!--            <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""-->
-<!--               th:classappend="'linkReturn' + ${order.id}"-->
-<!--               th:orderId="${order.id}"-->
-<!--               title="Return this order"></a>-->
-<!--          </th:block>-->
+          <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">
+            &nbsp;&nbsp;&nbsp;
+            <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+               th:classappend="'linkReturn' + ${order.id}"
+               th:orderId="${order.id}"
+               title="Return this order"></a>
+          </th:block>
         </td>
       </tr>
       </tbody>
@@ -68,7 +68,7 @@
 
   <div th:replace="fragments :: pagination('/orders', 'orders')"></div>
 
-<!--  <div th:replace="orders/return_order_modal :: content"></div>-->
+  <div th:replace="orders/return_order_modal :: content"></div>
 
   <div class="modal fade" id="detailModal">
     <div class="modal-dialog modal-xl">
