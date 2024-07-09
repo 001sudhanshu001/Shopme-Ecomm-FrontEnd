@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
+import com.ShopmeFrontEnd.Util.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +39,9 @@ public class Brand {
             return "/images/image-thumbnail.png";
         }
 
-        return "/brand-logos/" + this.id + "/" + this.logo;
+//        return "/brand-logos/" + this.id + "/" + this.logo;
+        return Constants.S3_BASE_URI + "/brand-logos/" + this.id + "/" + this.logo;
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
+import com.ShopmeFrontEnd.Util.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -72,7 +73,9 @@ public class Product {
         if(id == null || mainImage == null) {
             return "/images/image-thumbnail.png";
         }
-        return "/product-images/" + this.id + "/" + this.mainImage;
+        //  return "/product-images/" + this.id + "/" + this.mainImage;
+
+        return Constants.S3_BASE_URI + "/product-images/" + this.id + "/" + this.mainImage;
     }
     @Override
     public String toString() {

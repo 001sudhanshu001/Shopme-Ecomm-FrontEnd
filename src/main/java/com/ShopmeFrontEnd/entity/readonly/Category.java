@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
+import com.ShopmeFrontEnd.Util.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -89,7 +90,9 @@ public class Category {
             return "/images/image-thumbnail.png";
         }
 
-        return "/category-images/" + this.id + "/" + this.image;
+        // return "/category-images/" + this.id + "/" + this.image;
+        return Constants.S3_BASE_URI + "/category-images/" + this.id + "/" + this.image;
+
     }
 
     public boolean isHasChildren() {

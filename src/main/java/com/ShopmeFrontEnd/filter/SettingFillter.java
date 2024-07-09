@@ -1,7 +1,9 @@
 package com.ShopmeFrontEnd.filter;
 
+import com.ShopmeFrontEnd.Util.Constants;
 import com.ShopmeFrontEnd.entity.readonly.Setting;
 import com.ShopmeFrontEnd.service.SettingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class SettingFillter implements Filter {
 
     // This filter will be executed for every request for each url
-    @Autowired
-    private SettingService service;
+
+    private final SettingService service;
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
@@ -37,7 +40,7 @@ public class SettingFillter implements Filter {
         });
 
 //       System.out.println(url);
-
+        request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
         filterChain.doFilter(request, response);
     }
 }

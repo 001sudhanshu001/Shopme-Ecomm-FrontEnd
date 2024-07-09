@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
+import com.ShopmeFrontEnd.Util.Constants;
 import com.ShopmeFrontEnd.entity.readonly.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,9 @@ public class ProductImage {  // this is for extra images of the product
 
     @Transient
     public String getImagePath() {
-        return "/product-images/" + product.getId() + "/extras/" + this.name;
+        //return "/product-images/" + product.getId() + "/extras/" + this.name;
+
+        return Constants.S3_BASE_URI + "/product-images/" + product.getId() + "/extras/" + this.name;
     }
 
 }
