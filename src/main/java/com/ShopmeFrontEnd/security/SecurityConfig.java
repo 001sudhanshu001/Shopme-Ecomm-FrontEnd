@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .and()
                 .authorizeRequests()
                 .mvcMatchers("/account_details", "/update_account_details", "/cart", "/orders/**",
-                              "/address_bool/**", "/checkout", "/place_order").authenticated()
+                              "/address_bool/**", "/checkout", "/place_order", "/reviews/** ").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
