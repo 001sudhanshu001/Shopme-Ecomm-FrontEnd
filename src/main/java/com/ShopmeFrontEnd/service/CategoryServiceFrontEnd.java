@@ -19,7 +19,7 @@ public class CategoryServiceFrontEnd {
         List<Category> allEnabled = repoFrontEnd.findAllEnabled();
         allEnabled.forEach(category -> {
             Set<Category> children = category.getChildren();
-            if(children == null || children.size() == 0){
+            if(children == null || children.isEmpty()){
                 listNoChiildrenCategory.add(category);
             }
         });

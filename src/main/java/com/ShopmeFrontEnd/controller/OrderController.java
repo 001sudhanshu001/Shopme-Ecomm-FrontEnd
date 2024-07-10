@@ -7,6 +7,7 @@ import com.ShopmeFrontEnd.entity.readonly.order.Order;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
 import com.ShopmeFrontEnd.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,14 @@ public class OrderController {
                                    @PathVariable(name = "pageNum") int pageNum,
                                    @Param("sortField")String sortField, @Param("sortDir")String sortDir, @Param("orderKeyword")String orderKeyword
     ) throws CustomerNotFoundException {
-        System.out.println("Search Keyword is : " + orderKeyword);
         Customer customer = getAuthenticatedCustomer(request);
         Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, orderKeyword);
 
+        System.out.println("PRINTING");
         List<Order> listOrders = page.getContent();
+        for(Order o : listOrders) {
+            System.out.println(o);
+        }
 
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());

@@ -47,4 +47,14 @@ public class OrderTrack {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        return "OrderTrack{" +
+                "id=" + id +
+                ", notes='" + notes + '\'' +
+                ", updatedTime=" + updatedTime +
+                ", status=" + status +
+                '}';
+    }
 }

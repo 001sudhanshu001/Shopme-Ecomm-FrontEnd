@@ -87,7 +87,6 @@ public class OrderService {
         Pageable pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE, sort);
 
         if (orderKeyword != null) {
-            System.out.println("FETCHING ORDER DETAILS");
             return orderRepo.findAll(orderKeyword, customer.getId(), pageable);
         }
 

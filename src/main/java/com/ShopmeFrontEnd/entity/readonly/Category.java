@@ -33,7 +33,10 @@ public class Category {
     @OneToOne // ek category ka ek hi parent
     @JoinColumn(name = "parent_id")
     private Category parent; // beacuse it will be hierarchical relation
-    @OneToMany(mappedBy = "parent") // ek category ke kai child
+
+    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is workin
+    // Strange behaviour
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 

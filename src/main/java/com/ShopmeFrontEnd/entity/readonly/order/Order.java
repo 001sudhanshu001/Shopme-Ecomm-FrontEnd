@@ -63,9 +63,13 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // one order can be in many details
+    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
+    // Strange behaviour
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // one order can be in many details
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
+    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
+    // Strange behaviour            , fetch = FetchType.EAGER
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderTrack> orderTracks = new ArrayList<>();
 
@@ -200,5 +204,10 @@ public class Order {
         productNames += "</ul>";
 
         return productNames;
+    }
+
+    @Override
+    public String toString() {
+        return this.orderTracks + " ...... " + this.orderDetails;
     }
 }
