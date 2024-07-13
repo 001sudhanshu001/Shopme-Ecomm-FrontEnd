@@ -2,8 +2,10 @@ package com.ShopmeFrontEnd.controller;
 
 import com.ShopmeFrontEnd.entity.readonly.Category;
 import com.ShopmeFrontEnd.entity.readonly.Product;
+import com.ShopmeFrontEnd.entity.readonly.Review;
 import com.ShopmeFrontEnd.service.CategoryServiceFrontEnd;
 import com.ShopmeFrontEnd.service.ProductServiceFrontEnd;
+import com.ShopmeFrontEnd.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ProductControllerFrontEnd {
     private final CategoryServiceFrontEnd categoryService;
     private final ProductServiceFrontEnd productService;
+    private final ReviewService reviewService;
 
 
     @GetMapping("/c/{category_alias}")
@@ -70,9 +73,12 @@ public class ProductControllerFrontEnd {
         // For breadcrumb
         List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
 
+        Page<Review> listReviews = reviewService.list3MostVotedReviewsByProduct(product);
+
         model.addAttribute("listCategoryParents", listCategoryParents);
         model.addAttribute("product", product);
         model.addAttribute("pageTitle", product.getShortName());
+        model.addAttribute("listReviews", listReviews);
         return "product/product_details";
     }
 

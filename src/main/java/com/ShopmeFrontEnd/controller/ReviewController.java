@@ -1,11 +1,14 @@
 package com.ShopmeFrontEnd.controller;
 
 import com.ShopmeFrontEnd.ExceptionHandler.CustomerNotFoundException;
+import com.ShopmeFrontEnd.ExceptionHandler.ProductNotFoundException;
 import com.ShopmeFrontEnd.ExceptionHandler.ReviewNotFoundException;
 import com.ShopmeFrontEnd.Util.GetEmailOfAuthenticatedCustomer;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
+import com.ShopmeFrontEnd.entity.readonly.Product;
 import com.ShopmeFrontEnd.entity.readonly.Review;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
+import com.ShopmeFrontEnd.service.ProductServiceFrontEnd;
 import com.ShopmeFrontEnd.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +30,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     private final CustomerServiceFrontEnd customerService;
+
+    private final ProductServiceFrontEnd productService;
 
     @GetMapping("/reviews")
     public String listFirstPage(Model model) {
@@ -87,6 +92,52 @@ public class ReviewController {
             return defaultRedirectURL;
         }
     }
+
+    @GetMapping("/ratings/{productAlias}")
+    public String listByProductFirstPage(@PathVariable(name = "productAlias") String productAlias, Model model,
+                                         HttpServletRequest request) {
+
+        return listByProductByPage(model, productAlias, 1, "reviewTime", "desc", request);
+    }
+
+    @GetMapping("/ratings/{productAlias}/page/{pageNum}")
+    public String listByProductByPage(Model model,
+                                      @PathVariable(name = "productAlias") String productAlias,
+                                      @PathVariable(name = "pageNum") int pageNum,
+                                      String sortField, String sortDir, HttpServletRequest request) {
+
+        Product product = productService.getProductByAlias(productAlias);
+        if(product == null) {
+            return "error/404";
+        }
+
+        Page<Review> page = reviewService.listByProduct(product, pageNum, sortField, sortDir);
+        List<Review> listReviews = page.getContent();
+
+        long startCount = (long) (pageNum - 1) * ReviewService.REVIEWS_PER_PAGE + 1;
+
+        model.addAttribute("startCount", startCount);
+
+        long endCount = startCount + ReviewService.REVIEWS_PER_PAGE - 1;
+
+        if (endCount > page.getTotalElements()) {
+            endCount = page.getTotalElements();
+        }
+
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("listReviews", listReviews);
+        model.addAttribute("product", product);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+
+        return "reviews/reviews_product";
+    }
+
 
 
     private Customer getAuthenticatedCustomer(HttpServletRequest request) {

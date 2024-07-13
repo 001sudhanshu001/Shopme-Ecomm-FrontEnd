@@ -17,17 +17,22 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(unique = true, length = 256, nullable = false)
     private String name;
+
     @Column(unique = true, length = 256, nullable = false)
     private String alias;
+
     @Column(length = 512, nullable = false, name = "short_description")
     private String shortDescription;
+
     @Column(length = 4000, nullable = false,  name = "full_description")
     private String fullDescription;
 
     @Column(name = "created_time")
     private Date createdTime;
+
     private Date updatedTime;
 
     private boolean enabled;
@@ -39,6 +44,7 @@ public class Product {
 
     private float price;
     @Column(name = "discount_percent")
+
     private float discountPercent;
 
     private float length;
@@ -127,5 +133,10 @@ public class Product {
 
     public Product(Integer id) {
         this.id = id;
+    }
+
+    @Transient
+    public String getURI() {
+        return "/p/" + this.alias + "/";
     }
 }

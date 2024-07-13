@@ -3,6 +3,7 @@ package com.ShopmeFrontEnd.service;
 import com.ShopmeFrontEnd.ExceptionHandler.ReviewNotFoundException;
 import com.ShopmeFrontEnd.dao.ReviewRepository;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
+import com.ShopmeFrontEnd.entity.readonly.Product;
 import com.ShopmeFrontEnd.entity.readonly.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,5 +42,20 @@ public class ReviewService {
             throw new ReviewNotFoundException("Customer doesn not have any reviews with ID " + reviewId);
 
         return review;
+    }
+
+    public Page<Review> list3MostVotedReviewsByProduct(Product product) {
+        Sort sort = Sort.by("votes").descending();
+        Pageable pageable = PageRequest.of(0, 3, sort);
+
+        return reviewRepo.findByProduct(product, pageable);
+    }
+
+    public Page<Review> listByProduct(Product product, int pageNum, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(pageNum - 1, REVIEWS_PER_PAGE, sort);
+
+        return reviewRepo.findByProduct(product, pageable);
     }
 }
