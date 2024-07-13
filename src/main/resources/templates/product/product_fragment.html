@@ -9,6 +9,17 @@
                 <b>[[${product.shortName}]]</b>
             </a>
         </div>
+         <div>
+             <table>
+                 <tr>
+                     <td>
+                         <input type="text" class="product-detail-rating-star" dir="ltr" data-size="xs"
+                                th:value="${product.averageRating}"/>
+                     </td>
+                     <td><small>[[${product.reviewCount}]]</small></td>
+                 </tr>
+             </table>
+         </div>
         <div th:if="${product.discountPercent <= 0}">
             <span>
                 <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
