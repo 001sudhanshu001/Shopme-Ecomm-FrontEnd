@@ -1,10 +1,12 @@
 package com.ShopmeFrontEnd.service;
 
 import com.ShopmeFrontEnd.ExceptionHandler.ReviewNotFoundException;
+import com.ShopmeFrontEnd.dao.OrderDetailRepository;
 import com.ShopmeFrontEnd.dao.ReviewRepository;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
 import com.ShopmeFrontEnd.entity.readonly.Review;
+import com.ShopmeFrontEnd.entity.readonly.order.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +21,12 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepo;
 
+    private final OrderDetailRepository orderDetailRepository;
+
 
     public Page<Review> listByCustomerByPage(Customer customer, String keyword, int pageNum, String sortField,
                                              String sortDir) {
 
-        // TODO Auto-generated method stub
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 
@@ -58,4 +61,18 @@ public class ReviewService {
 
         return reviewRepo.findByProduct(product, pageable);
     }
+
+    public boolean hasCustomerAlreadyReviewedProduct(Customer customer, Integer productId) {
+        Long count = reviewRepo.countByCustomerAndProduct(customer.getId(), productId);
+        return count > 0;
+    }
+
+    public boolean canCustomerReviewProduct(Customer customer, Integer productId) {
+        // A customer can only review the product if he had bought it and has been delivered to him
+        Long count = orderDetailRepository
+                .countByProductAndCustomerAndOrderStatus(productId, customer.getId(), OrderStatus.DELIVERED);
+
+        return count > 0;
+    }
+
 }

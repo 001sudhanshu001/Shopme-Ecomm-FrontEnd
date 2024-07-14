@@ -29,13 +29,12 @@ public class ShippingRateService {
 
 
 //    public void listByPage(int pageNum, PagingAndSortingHelper helper) {
-//        // TODO Auto-generated method stub
+//
 //        helper.listEntities(pageNum, RATES_PER_PAGE, shipRepo);
 //    }
 
 
     public List<Country> listAllCountries() {
-        // TODO Auto-generated method stub
         return countryRepo.findAllByOrderByNameAsc();
     }
 
@@ -57,7 +56,7 @@ public class ShippingRateService {
 
 
 //    public void save(ShippingRate rateInForm) throws ShippingRateAlreadyExistsException {
-//        // TODO Auto-generated method stub
+//
 //        ShippingRate rateInDB = shipRepo.findByCountryAndState(
 //                rateInForm.getCountry().getId(), rateInForm.getState());
 //        boolean foundExistingRateInNewMode = rateInForm.getId() == null && rateInDB != null;
@@ -71,7 +70,7 @@ public class ShippingRateService {
 //    }
 
 //    public ShippingRate get(Integer id) throws ShippingRateNotFoundException {
-//        // TODO Auto-generated method stub
+//
 //        try {
 //            return shipRepo.findById(id).get();
 //        } catch (NoSuchElementException ex) {
@@ -80,7 +79,7 @@ public class ShippingRateService {
 //    }
 
 //    public void updateCODSupport(Integer id, boolean codSupported) throws ShippingRateNotFoundException {
-//        // TODO Auto-generated method stub
+//
 //        Long count = shipRepo.countById(id);
 //        if (count == null || count == 0) {
 //            throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
@@ -90,7 +89,7 @@ public class ShippingRateService {
 //    }
 
 //    public void delete(Integer id) throws ShippingRateNotFoundException {
-//        // TODO Auto-generated method stub
+//
 //        Long count = shipRepo.countById(id);
 //        if (count == null || count == 0) {
 //            throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);

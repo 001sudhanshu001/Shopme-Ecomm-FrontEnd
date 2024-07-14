@@ -51,10 +51,7 @@ public class OrderService {
             orderDetails.add(orderDetail);
         }
 
-
         return orderRepo.save(newOrder);
-
-
     }
 
     private static Order getOrder(Customer customer, PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
@@ -91,7 +88,6 @@ public class OrderService {
         }
 
         return orderRepo.findAll(customer.getId(), pageable);
-
     }
 
     public void setOrderReturnRequested(OrderReturnRequest returnRequested, Customer customer) throws OrderNotFoundException {

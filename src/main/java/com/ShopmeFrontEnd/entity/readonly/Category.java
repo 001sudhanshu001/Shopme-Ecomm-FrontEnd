@@ -34,9 +34,7 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent; // beacuse it will be hierarchical relation
 
-    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is workin
-    // Strange behaviour
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent")
     @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 

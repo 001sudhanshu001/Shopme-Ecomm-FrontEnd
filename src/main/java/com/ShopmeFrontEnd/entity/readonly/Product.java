@@ -63,18 +63,20 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand; // one brand can have many products
 
-    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
-    // Strange behaviour
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductImage> images = new HashSet<>();  //one product can have many images
 
-    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
-    // Strange behaviour
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetails> details = new ArrayList<>();
 
     private int reviewCount;
     private float averageRating;
+
+    @Transient
+    private boolean customerCanReview;
+
+    @Transient
+    private boolean reviewedByCustomer;
 
 
     public void addDetails(String name, String value){

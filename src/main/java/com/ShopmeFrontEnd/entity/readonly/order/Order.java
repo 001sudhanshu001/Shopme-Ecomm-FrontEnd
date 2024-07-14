@@ -44,13 +44,19 @@ public class Order {
     private String country;
 
     private Date orderTime;
+
     private float shippingCost;
+
     private float productCost;
+
     private float subtotal;
+
     private float tax;
+
     private float total;
 
     private int deliveryDays;
+
     private Date deliveryDate;
 
     @Enumerated(EnumType.STRING)
@@ -63,13 +69,9 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
-    // Strange behaviour
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // one order can be in many details
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // one order can be in many details
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
-    // TODO -> Initially Fetch type was lazy and then suddenly the code broke, now after making it Eager it is working
-    // Strange behaviour            , fetch = FetchType.EAGER
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderTrack> orderTracks = new ArrayList<>();
 
@@ -105,7 +107,6 @@ public class Order {
         this.setPostalCode(address.getPostalCode());
         this.setState(address.getState());
     }
-
 
     @Transient
     public String getShippingAddress() {
@@ -195,15 +196,15 @@ public class Order {
 
     @Transient
     public String getProductNames() {
-        String productNames = "";
-        productNames = "<ul>";
+        StringBuilder productNames = new StringBuilder();
+        productNames = new StringBuilder("<ul>");
 
         for (OrderDetail detail : orderDetails) {
-            productNames += "<li>" + detail.getProduct().getShortName() + "</li>";
+            productNames.append("<li>").append(detail.getProduct().getShortName()).append("</li>");
         }
-        productNames += "</ul>";
+        productNames.append("</ul>");
 
-        return productNames;
+        return productNames.toString();
     }
 
     @Override

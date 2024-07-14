@@ -20,4 +20,10 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Review findByCustomerAndId(Integer customerId, Integer reviewId);
 
     Page<Review> findByProduct(Product product, Pageable pageable);
+
+    // To check whether a customer has already reviewed a product
+    @Query("SELECT COUNT(r.id) FROM Review r WHERE r.customer.id = ?1 AND "
+            + "r.product.id = ?2")
+    Long countByCustomerAndProduct(Integer customerId, Integer productId);
+
 }
