@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO : Implement Indexing
+
 @Entity
 @Table(name = "brands")
 @Getter

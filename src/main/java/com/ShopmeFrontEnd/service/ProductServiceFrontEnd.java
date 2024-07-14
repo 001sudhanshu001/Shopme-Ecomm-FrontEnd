@@ -1,5 +1,6 @@
 package com.ShopmeFrontEnd.service;
 
+import com.ShopmeFrontEnd.ExceptionHandler.ProductNotFoundException;
 import com.ShopmeFrontEnd.dao.ProductRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.Product;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +28,17 @@ public class ProductServiceFrontEnd {
     }
 
     public Product getProductByAlias(String alias) {
-        Product product = productRepo.findByAlias(alias);
-//        if(product == null){
+        //        if(product == null){
 //            throw new ProductNotFoundException("Could not find any product with alias " + alias);
 //        }
-        return product;
+        return productRepo.findByAlias(alias);
     }
+
+    public Product getProduct(Integer id) throws ProductNotFoundException {
+        return productRepo.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Could not find any product with ID " + id));
+    }
+
 
     public Page<Product> search(String keyword, int pageNum) {
         Pageable pageable = PageRequest.of(pageNum - 1, SEARCH_RESULT_PER_PAGE);

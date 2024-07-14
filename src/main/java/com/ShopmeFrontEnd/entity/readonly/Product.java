@@ -10,7 +10,13 @@ import java.util.*;
 
 @Entity
 @Setter @Getter
-@Table(name = "products")
+@Table(name = "products",
+        indexes = {
+                @Index(name = "product_name_index", columnList = "name"),
+                @Index(name = "product_alias_index", columnList = "alias")
+        }
+
+)
 @NoArgsConstructor
 public class Product {
 

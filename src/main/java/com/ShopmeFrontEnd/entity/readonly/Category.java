@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO : Implement indexing
 @Entity
 @Getter
 @Setter
@@ -18,21 +19,25 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 128, nullable = false , unique = true)
     private String name;
+
     @Column(length = 64, nullable = false , unique = true)
     private String alias;
+
     @Column(length = 128, nullable = false) // length of image file
     private String image;
+
     private boolean enabled;
 
     // This is for Searching Category
     @Column(name = "all_parent_ids", length = 256, nullable = true)// "nullable = true" for Root Category
     private String allParentIDs;
 
-    @OneToOne // ek category ka ek hi parent
+    @OneToOne
     @JoinColumn(name = "parent_id")
-    private Category parent; // beacuse it will be hierarchical relation
+    private Category parent; // because it will be hierarchical relation
 
     @OneToMany(mappedBy = "parent")
     @OrderBy("name asc")
@@ -61,7 +66,7 @@ public class Category {
         copyCategory.setImage(category.getImage());
         copyCategory.setAlias(category.getAlias());
         copyCategory.setEnabled(category.isEnabled());
-        copyCategory.setHasChildren(category.getChildren().size() > 0);
+        copyCategory.setHasChildren(!category.getChildren().isEmpty());
 
         return copyCategory;
     }

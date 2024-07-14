@@ -1,6 +1,5 @@
 package com.ShopmeFrontEnd.entity.readonly;
 
-import com.ShopmeFrontEnd.entity.readonly.Product;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +13,13 @@ public class  ProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false, length = 255)
     public String name;
+
     @Column(nullable = false, length = 255)
     public String value;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

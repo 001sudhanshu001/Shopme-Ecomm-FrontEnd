@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -137,6 +138,65 @@ public class ReviewController {
         return "reviews/reviews_product";
     }
 
+    @GetMapping("/write_review/product/{productAlias}")
+    public String showViewForm(@PathVariable("productAlias") String productAlias, Model model,
+                               HttpServletRequest request) throws CustomerNotFoundException {
+
+        Review review = new Review();
+
+        Product product;
+
+        product = productService.getProductByAlias(productAlias);
+        if(product == null) {
+            return "error/404";
+        }
+
+        Customer customer = getAuthenticatedCustomer(request);
+
+        boolean customerReviewed = reviewService.hasCustomerAlreadyReviewedProduct(customer, product.getId());
+
+        if (customerReviewed) {
+            model.addAttribute("customerReviewed", customerReviewed);
+        } else {
+            boolean customerCanReview = reviewService.canCustomerReviewProduct(customer, product.getId());
+
+            if (customerCanReview) {
+                model.addAttribute("customerCanReview", customerCanReview);
+            } else {
+                model.addAttribute("NoReviewPermission", true);
+            }
+        }
+        model.addAttribute("product", product);
+        model.addAttribute("review", review);
+
+        return "reviews/review_form";
+    }
+
+    @PostMapping("/post_review/{productAlias}")
+    public String saveReview(@PathVariable String productAlias, Model model, Review review, HttpServletRequest request) throws CustomerNotFoundException {
+        Customer customer = getAuthenticatedCustomer(request);
+
+        Product product = productService.getProductByAlias(productAlias);
+
+        if(product == null) { // This is deliberately shown, if someone changes the alias
+            return "error/500";
+        }
+
+        // ensuring that the customer can review this product
+        boolean canCustomerReviewProduct = reviewService.canCustomerReviewProduct(customer, product.getId());
+
+        if(!canCustomerReviewProduct) {
+            return "error/404";
+        }
+
+        review.setProduct(product);
+        review.setCustomer(customer);
+
+        Review savedReview = reviewService.save(review);
+        model.addAttribute("review", savedReview);
+
+        return "reviews/review_done";
+    }
 
 
     private Customer getAuthenticatedCustomer(HttpServletRequest request) {

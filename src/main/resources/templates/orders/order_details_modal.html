@@ -135,9 +135,9 @@
                                 Shipping Cost : [[${detail.shippingCost}]]
                             </div>
                         </th:block>
-
+                                                                                        <!--TODO Changed product.id to product.alias-->
                         <div th:if="${!product.reviewedByCustomer && product.customerCanReview}">
-                            <a href="" class="btn btn-info">Write Review</a>
+                            <a th:href="@{'/write_review/product/' + ${product.alias}}" class="btn btn-info">Write Review</a>
                         </div>
 
                         <div th:if="${product.reviewedByCustomer}">

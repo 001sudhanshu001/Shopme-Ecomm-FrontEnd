@@ -2,6 +2,7 @@ package com.ShopmeFrontEnd.service;
 
 import com.ShopmeFrontEnd.ExceptionHandler.ReviewNotFoundException;
 import com.ShopmeFrontEnd.dao.OrderDetailRepository;
+import com.ShopmeFrontEnd.dao.ProductRepoFrontEnd;
 import com.ShopmeFrontEnd.dao.ReviewRepository;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
@@ -14,14 +15,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReviewService {
     public static final int REVIEWS_PER_PAGE = 5;
 
     private final ReviewRepository reviewRepo;
 
     private final OrderDetailRepository orderDetailRepository;
+
+    private final ProductRepoFrontEnd productRepository;
 
 
     public Page<Review> listByCustomerByPage(Customer customer, String keyword, int pageNum, String sortField,
@@ -61,6 +68,16 @@ public class ReviewService {
 
         return reviewRepo.findByProduct(product, pageable);
     }
+
+    public Review save(Review review) {
+        review.setReviewTime(new Date());
+        Review savedReview = reviewRepo.save(review);
+
+        Integer productId = savedReview.getProduct().getId();
+        productRepository.updateReviewCountAndAverageRating(productId);
+        return savedReview;
+    }
+
 
     public boolean hasCustomerAlreadyReviewedProduct(Customer customer, Integer productId) {
         Long count = reviewRepo.countByCustomerAndProduct(customer.getId(), productId);

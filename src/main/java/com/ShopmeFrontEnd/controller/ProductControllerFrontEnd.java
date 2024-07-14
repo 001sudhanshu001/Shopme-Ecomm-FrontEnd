@@ -1,9 +1,12 @@
 package com.ShopmeFrontEnd.controller;
 
+import com.ShopmeFrontEnd.Util.GetEmailOfAuthenticatedCustomer;
 import com.ShopmeFrontEnd.entity.readonly.Category;
+import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
 import com.ShopmeFrontEnd.entity.readonly.Review;
 import com.ShopmeFrontEnd.service.CategoryServiceFrontEnd;
+import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
 import com.ShopmeFrontEnd.service.ProductServiceFrontEnd;
 import com.ShopmeFrontEnd.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -22,6 +26,7 @@ public class ProductControllerFrontEnd {
     private final CategoryServiceFrontEnd categoryService;
     private final ProductServiceFrontEnd productService;
     private final ReviewService reviewService;
+    private final CustomerServiceFrontEnd customerService;
 
 
     @GetMapping("/c/{category_alias}")
@@ -64,7 +69,7 @@ public class ProductControllerFrontEnd {
     }
 
     @GetMapping("/p/{product_alias}")
-    public String viewProductDetail(@PathVariable("product_alias") String alias, Model model){
+    public String viewProductDetail(@PathVariable("product_alias") String alias, Model model, HttpServletRequest request){
         Product product = productService.getProductByAlias(alias);
         if(product == null){
             return "error/404";
@@ -74,6 +79,17 @@ public class ProductControllerFrontEnd {
         List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
 
         Page<Review> listReviews = reviewService.list3MostVotedReviewsByProduct(product);
+
+        Customer customer = getAuthenticatedCustomer(request);
+        if(customer != null) {
+            boolean hasCustomerAlreadyReviewedProduct = reviewService.hasCustomerAlreadyReviewedProduct(customer, product.getId());
+            if(hasCustomerAlreadyReviewedProduct) {
+                model.addAttribute("customerReviewed", hasCustomerAlreadyReviewedProduct);
+            }else {
+                boolean canCustomerReviewProduct = reviewService.canCustomerReviewProduct(customer, product.getId());
+                model.addAttribute("customerCanReview", canCustomerReviewProduct);
+            }
+        }
 
         model.addAttribute("listCategoryParents", listCategoryParents);
         model.addAttribute("product", product);
@@ -111,5 +127,11 @@ public class ProductControllerFrontEnd {
         model.addAttribute("listProducts", listProducts);
         model.addAttribute("keyword", keyword);
         return "product/search_result";
+    }
+
+    // TODO : Refactor code to separate this logic
+    private Customer getAuthenticatedCustomer(HttpServletRequest request) {
+        String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
+        return customerService.getCustomerByEmail(email);
     }
 }
