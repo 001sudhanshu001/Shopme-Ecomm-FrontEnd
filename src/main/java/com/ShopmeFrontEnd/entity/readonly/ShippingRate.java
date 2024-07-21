@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "shipping_rates")
 @NoArgsConstructor
 @Getter
 @Setter
-public class ShippingRate /*extends IdBasedEntity implements Serializable*/ {
+public class ShippingRate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

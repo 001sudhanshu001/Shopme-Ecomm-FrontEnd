@@ -5,6 +5,7 @@ import com.ShopmeFrontEnd.entity.readonly.Setting;
 import com.ShopmeFrontEnd.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Order(-120)
 public class SettingFillter implements Filter {
 
     // This filter will be executed for every request for each url
@@ -39,7 +41,6 @@ public class SettingFillter implements Filter {
             request.setAttribute(setting.getKey(), setting.getValue());
         });
 
-//       System.out.println(url);
         request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
         filterChain.doFilter(request, response);
     }

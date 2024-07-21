@@ -19,6 +19,11 @@ spring:
                 format_sql: false
         show-sql: false
         open-in-view: true
+    redis:
+        host: 127.0.0.1
+        port: 6379
+    cache:
+        type: redis
     security:
         oauth2:
             client:

@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 @Table(name = "product_images")
-public class ProductImage {  // this is for extra images of the product
+public class ProductImage implements Serializable {  // this is for extra images of the product
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

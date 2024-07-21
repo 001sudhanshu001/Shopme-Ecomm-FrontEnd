@@ -6,17 +6,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "cart_items")
 @Getter @Setter
 @NoArgsConstructor
-public class CartItem {
+public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne // Bahut saare Items ek Cutomer ke pass
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

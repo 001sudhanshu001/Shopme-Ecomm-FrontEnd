@@ -9,6 +9,7 @@ import com.ShopmeFrontEnd.entity.readonly.Product;
 import com.ShopmeFrontEnd.entity.readonly.Review;
 import com.ShopmeFrontEnd.entity.readonly.order.OrderStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +55,10 @@ public class ReviewService {
         return review;
     }
 
+    // TODO : Implement Redis
+    @Cacheable(value = "reviews", key = "#product.getId()")
     public Page<Review> list3MostVotedReviewsByProduct(Product product) {
+        System.out.println("method invoked ");
         Sort sort = Sort.by("votes").descending();
         Pageable pageable = PageRequest.of(0, 3, sort);
 

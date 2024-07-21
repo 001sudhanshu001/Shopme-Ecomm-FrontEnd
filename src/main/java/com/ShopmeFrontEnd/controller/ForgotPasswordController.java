@@ -58,7 +58,6 @@ public class ForgotPasswordController {
         EmailSettingBag emailSetting = settingService.getEmailSetting();
         JavaMailSenderImpl mailSender = MailSenderUtil.prepareMailSender(emailSetting);
 
-        String toAddress = email;
         String subject = "Here is the link to reset your password";
 
         String content = "<p>Hello,<p>"
@@ -75,7 +74,7 @@ public class ForgotPasswordController {
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         helper.setFrom(emailSetting.getFromAddress(), emailSetting.getSenderName());
-        helper.setTo(toAddress);
+        helper.setTo(email);
         helper.setSubject(subject);
 
         helper.setText(content, true);

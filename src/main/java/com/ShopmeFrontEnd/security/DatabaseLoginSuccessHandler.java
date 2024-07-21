@@ -29,7 +29,7 @@ public class DatabaseLoginSuccessHandler extends SavedRequestAwareAuthentication
 
         System.out.println("After Database login success");
 
-        // MAKE ONLY NECESSARY CALL TO DATABSE
+        // MAKE ONLY NECESSARY CALL TO DATABASE
         if(customer.getAuthenticationType() == null || !customer.getAuthenticationType().equals(AuthenticationType.DATABASE)){
             customerService.updateAuthenticationType(customer, AuthenticationType.DATABASE);
         }

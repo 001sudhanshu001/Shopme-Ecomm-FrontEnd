@@ -7,23 +7,28 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO : Implement Indexing
-
 @Entity
-@Table(name = "brands")
+@Table(name = "brands",
+        indexes = {
+                @Index(name = "brand_name_index", columnList = "name")
+        }
+)
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Brand {
+public class Brand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false, length = 45, unique = true)
     private String name;
+
     @Column(nullable = false, length = 128)
     private String logo;
 

@@ -3,6 +3,7 @@ package com.ShopmeFrontEnd.entity.readonly;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "settings")
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Setting {
+public class Setting implements Serializable {
     @Id
     @Column(name = "`key`", nullable = false, length = 123)
     private String key;

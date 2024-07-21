@@ -36,8 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerControllerFrontEnd {
 
-    @Autowired
-    private CustomerServiceFrontEnd customerService;
+    private final CustomerServiceFrontEnd customerService;
     private final SettingService settingService;
 
     @GetMapping("/register")

@@ -78,7 +78,10 @@ public class ProductControllerFrontEnd {
         // For breadcrumb
         List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
 
-        Page<Review> listReviews = reviewService.list3MostVotedReviewsByProduct(product);
+        // TODO : Use Redis to Store the top 3 Reviews
+        Page<Review> page = reviewService.list3MostVotedReviewsByProduct(product);
+        List<Review> listReviews = page.getContent();
+        System.out.println("Printing List of Reviews :: " + listReviews);
 
         Customer customer = getAuthenticatedCustomer(request);
         if(customer != null) {
