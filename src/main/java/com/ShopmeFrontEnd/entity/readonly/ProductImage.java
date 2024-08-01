@@ -17,12 +17,16 @@ public class ProductImage implements Serializable {  // this is for extra images
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product; // one product can have many images
+
+    @Transient
+    private String preSignedURL;
 
     public ProductImage(String name, Product product) {
         this.name = name;

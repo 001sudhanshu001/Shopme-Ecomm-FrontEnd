@@ -1,8 +1,10 @@
 package com.ShopmeFrontEnd.service;
 
 import com.ShopmeFrontEnd.ExceptionHandler.ProductNotFoundException;
+import com.ShopmeFrontEnd.Util.AmazonS3Util;
 import com.ShopmeFrontEnd.dao.ProductRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.Product;
+import com.ShopmeFrontEnd.entity.readonly.ProductImage;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ public class ProductServiceFrontEnd {
 
     private final ProductRepoFrontEnd productRepo;
 
+    private final AmazonS3Util amazonS3Util;
+
     public Page<Product> listProductByCategory(int pageNum, Integer categoryId){
         String categoryIdMatch = "-" + categoryId + "-";
 
@@ -28,7 +32,9 @@ public class ProductServiceFrontEnd {
     // TODO -> Causes LAZY Initialization Exception
 //    @Cacheable(value = "product", key = "#alias")
     public Product getProductByAlias(String alias) {
-        return productRepo.findByAlias(alias);
+        Product product = productRepo.findByAlias(alias);
+        addResignedURI(product);
+        return product;
     }
 
     public Product getProduct(Integer id) throws ProductNotFoundException {
@@ -36,9 +42,19 @@ public class ProductServiceFrontEnd {
                 .orElseThrow(() -> new ProductNotFoundException("Could not find any product with ID " + id));
     }
 
-
     public Page<Product> search(String keyword, int pageNum) {
         Pageable pageable = PageRequest.of(pageNum - 1, SEARCH_RESULT_PER_PAGE);
         return productRepo.search(keyword, pageable);
+    }
+
+    private void addResignedURI(Product product) {
+        product.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
+                + product.getId() + "/" + product.getMainImage()));
+
+        // TODO : Create Static Field in a separate class for Object keys
+        for (ProductImage productImage : product.getImages()) {
+            productImage.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
+                    + product.getId() + "/extra/" + productImage.getName()));
+        }
     }
 }

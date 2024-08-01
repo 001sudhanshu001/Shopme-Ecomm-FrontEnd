@@ -62,6 +62,9 @@ public class Product implements Serializable {
     @Column(name = "main_image", nullable = false)
     private String mainImage;
 
+    @Transient
+    private String preSignedURL;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category; // one cate. can have many products
