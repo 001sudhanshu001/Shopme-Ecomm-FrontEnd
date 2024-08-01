@@ -20,7 +20,7 @@
       <th:block th:each="cat : ${category.children}">
           <div class="col" th:if="${cat.enabled == true}">
               <a th:href="@{'/c/' + ${cat.alias}}">
-                  <img th:src="@{${cat.imagePath}}" height="70">
+                  <img th:src="@{${cat.getPreSignedURL()}}" height="70">
                   <br>
                   <b>[[${cat.name}]]</b>
               </a>

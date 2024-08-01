@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ProductServiceFrontEnd {
@@ -26,14 +28,17 @@ public class ProductServiceFrontEnd {
 
         Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE);
 
-        return productRepo.listProductByCategory(categoryId, categoryIdMatch, pageable);
+        Page<Product> productPage = productRepo.listProductByCategory(categoryId, categoryIdMatch, pageable);
+
+        addPresignedURL(productPage);
+        return productPage;
     }
 
     // TODO -> Causes LAZY Initialization Exception
 //    @Cacheable(value = "product", key = "#alias")
     public Product getProductByAlias(String alias) {
         Product product = productRepo.findByAlias(alias);
-        addResignedURI(product);
+        addPresignedURL(product);
         return product;
     }
 
@@ -44,17 +49,35 @@ public class ProductServiceFrontEnd {
 
     public Page<Product> search(String keyword, int pageNum) {
         Pageable pageable = PageRequest.of(pageNum - 1, SEARCH_RESULT_PER_PAGE);
-        return productRepo.search(keyword, pageable);
+        Page<Product> productPage = productRepo.search(keyword, pageable);
+        addPresignedURL(productPage);
+        return productPage;
     }
 
-    private void addResignedURI(Product product) {
+    public void addPresignedURL(Product product) {
         product.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
                 + product.getId() + "/" + product.getMainImage()));
 
         // TODO : Create Static Field in a separate class for Object keys
         for (ProductImage productImage : product.getImages()) {
             productImage.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
-                    + product.getId() + "/extra/" + productImage.getName()));
+                    + product.getId() + "/extras/" + productImage.getName()));
         }
+    }
+
+    private void addPresignedURL(Page<Product> page) {
+        List<Product> content = page.getContent();
+
+        for(Product product : content) {
+            product.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
+                    + product.getId() + "/" + product.getMainImage()));
+        }
+        // No need to generate URL for extra images as in list only main image will be displayed
+//
+//        // TODO : Create Static Field in a separate class for Object keys
+//        for (ProductImage productImage : product.getImages()) {
+//            productImage.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
+//                    + product.getId() + "/extras/" + productImage.getName()));
+//        }
     }
 }

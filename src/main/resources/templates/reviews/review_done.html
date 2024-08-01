@@ -15,7 +15,7 @@
     <div><h2>Write Product Review</h2></div>
 
     <div>
-        <img th:src="@{${review.product.mainImagePath}}" style="height: 200px" />
+        <img th:src="@{${review.product.getPreSignedURL()}}" style="height: 200px" />
     </div>
 
     <div>

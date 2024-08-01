@@ -7,6 +7,7 @@ import com.ShopmeFrontEnd.dao.ProductRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.CartItem;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.entity.readonly.Product;
+import com.ShopmeFrontEnd.entity.readonly.ProductImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class ShoppingCartService {
     private final CartItemRepo cartRepo;
     private final ProductRepoFrontEnd productRepo;
+    private final ProductServiceFrontEnd productService;
 
     public Integer addProduct(Integer productId, Integer quantity, Customer customer)
             throws ShoppingCartException {
@@ -50,8 +52,12 @@ public class ShoppingCartService {
     }
 
     public List<CartItem> listCartItems(Customer customer){
+        List<CartItem> cartItems = cartRepo.findByCustomer(customer);
+        for (CartItem cartItem : cartItems) {
+            productService.addPresignedURL(cartItem.getProduct());
+        }
 
-        return cartRepo.findByCustomer(customer);
+        return cartItems;
     }
 
     // When user updates the quantity in cart page then this method will be called

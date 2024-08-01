@@ -26,7 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private static final String defaultRedirectURL = "redirect:/reviews/page/1?sortField=reviewTime&sortDir=desc";
+    private static final String defaultRedirectURL =
+            "redirect:/reviews/page/1?sortField=reviewTime&sortDir=desc";
 
     private final ReviewService reviewService;
 
@@ -75,7 +76,8 @@ public class ReviewController {
 
     @GetMapping("/reviews/detail/{id}")
     public String viewReview(@PathVariable("id") Integer id, Model model,
-                             RedirectAttributes ra, HttpServletRequest request) throws CustomerNotFoundException {
+                             RedirectAttributes ra, HttpServletRequest request)
+            throws CustomerNotFoundException {
 
         Customer customer = getAuthenticatedCustomer(request);
         try {
@@ -173,7 +175,9 @@ public class ReviewController {
     }
 
     @PostMapping("/post_review/{productAlias}")
-    public String saveReview(@PathVariable String productAlias, Model model, Review review, HttpServletRequest request) throws CustomerNotFoundException {
+    public String saveReview(@PathVariable String productAlias,
+                             Model model, Review review,
+                             HttpServletRequest request) throws CustomerNotFoundException {
         Customer customer = getAuthenticatedCustomer(request);
 
         Product product = productService.getProductByAlias(productAlias);

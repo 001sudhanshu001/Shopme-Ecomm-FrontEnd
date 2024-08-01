@@ -116,11 +116,8 @@ public class Product implements Serializable {
     }
 
     public boolean containsImageName(String imageName) {
-        Iterator<ProductImage> iterator = images.iterator();
-
-        while (iterator.hasNext()){
-            ProductImage img = iterator.next();
-            if(img.getName().equals(imageName)){
+        for (ProductImage img : images) {
+            if (img.getName().equals(imageName)) {
                 return true;
             }
         }
