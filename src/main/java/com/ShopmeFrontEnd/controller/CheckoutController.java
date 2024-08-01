@@ -62,7 +62,8 @@ public class CheckoutController {
     }
 
     @PostMapping("/place_order")
-    public String placeOrder(HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public String placeOrder(HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
         String paymentType = request.getParameter("paymentMethod"); // Fetched from checkout.html name = "paymentMethod" and its value is COD
         PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentType);
 
@@ -82,14 +83,16 @@ public class CheckoutController {
         CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
 
         // Placing Order and removing the items from the Cart
-        Order placedOrder = orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
+        Order placedOrder =
+                orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
         cartService.deleteByCustomer(customer);
 
         sendOrderConfirmationEmail(request, placedOrder);
         return "checkout/order_completed";
     }
 
-    private void sendOrderConfirmationEmail(HttpServletRequest request, Order order) throws MessagingException, UnsupportedEncodingException {
+    private void sendOrderConfirmationEmail(HttpServletRequest request, Order order)
+            throws MessagingException, UnsupportedEncodingException {
         EmailSettingBag emailSettings = settingService.getEmailSetting();
         JavaMailSenderImpl mailSender = MailSenderUtil.prepareMailSender(emailSettings);
         mailSender.setDefaultEncoding("utf-8"); // For currency Symbol

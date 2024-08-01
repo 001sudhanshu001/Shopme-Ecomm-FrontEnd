@@ -100,7 +100,7 @@ function removeProduct(link) {
             xhr.setRequestHeader(csrfHeaderName, csrfValue);
         }
     }).done(function(response){
-        //location.reload(); Instead of relaoding we will remove that dive only by using JS
+        //location.reload(); Instead of reloading we will remove that div only by using JS
         rowNumber = link.attr("rowNumber");
         removeProductHTML(rowNumber);
         updateTotal();

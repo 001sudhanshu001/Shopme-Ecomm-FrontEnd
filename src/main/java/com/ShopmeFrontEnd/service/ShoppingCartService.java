@@ -21,7 +21,8 @@ public class ShoppingCartService {
     private final CartItemRepo cartRepo;
     private final ProductRepoFrontEnd productRepo;
 
-    public Integer addProduct(Integer productId, Integer quantity, Customer customer) throws ShoppingCartException {
+    public Integer addProduct(Integer productId, Integer quantity, Customer customer)
+            throws ShoppingCartException {
         Integer updatedQuantity = quantity;
         Product product = new Product(productId);
 
@@ -57,8 +58,7 @@ public class ShoppingCartService {
     public float updateQuantity(Integer productId, Integer quantity, Customer customer){
         cartRepo.updateQuantity(quantity, customer.getId(), productId);
         Product product = productRepo.findById(productId).get();
-        float subTotal = product.getDiscountPrice() * quantity;
-        return subTotal;
+        return product.getDiscountPrice() * quantity;
     }
 
     public void removeProduct(Integer productId, Customer customer){

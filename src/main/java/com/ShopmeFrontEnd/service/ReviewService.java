@@ -32,8 +32,8 @@ public class ReviewService {
     private final ProductRepoFrontEnd productRepository;
 
 
-    public Page<Review> listByCustomerByPage(Customer customer, String keyword, int pageNum, String sortField,
-                                             String sortDir) {
+    public Page<Review> listByCustomerByPage(Customer customer, String keyword, int pageNum,
+                                             String sortField, String sortDir) {
 
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
@@ -47,7 +47,8 @@ public class ReviewService {
         return reviewRepo.findByCustomer(customer.getId(), pageable);
     }
 
-    public Review getByCustomerAndId(Customer customer, Integer reviewId) throws ReviewNotFoundException {
+    public Review getByCustomerAndId(Customer customer, Integer reviewId)
+            throws ReviewNotFoundException {
         Review review = reviewRepo.findByCustomerAndId(customer.getId(), reviewId);
         if (review == null)
             throw new ReviewNotFoundException("Customer doesn not have any reviews with ID " + reviewId);
@@ -58,7 +59,6 @@ public class ReviewService {
     // TODO : Implement Redis
     @Cacheable(value = "reviews", key = "#product.getId()")
     public Page<Review> list3MostVotedReviewsByProduct(Product product) {
-        System.out.println("method invoked ");
         Sort sort = Sort.by("votes").descending();
         Pageable pageable = PageRequest.of(0, 3, sort);
 

@@ -44,7 +44,7 @@ public class ReviewController {
                                               @PathVariable(name = "pageNum") int pageNum,
                                               String keyword, String sortField, String sortDir)  {
 
-        Customer customer = getAuthenticatedCustomer(request);;
+        Customer customer = getAuthenticatedCustomer(request);
 
         Page<Review> page = reviewService.listByCustomerByPage(customer, keyword, pageNum, sortField, sortDir);
         List<Review> listReviews = page.getContent();

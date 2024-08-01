@@ -9,7 +9,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers",
+        indexes = {
+                @Index(name = "email", columnList = "email", unique = true)
+        }
+)
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

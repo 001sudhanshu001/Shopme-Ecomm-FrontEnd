@@ -37,9 +37,11 @@ public class ProductControllerFrontEnd {
     @GetMapping("/c/{category_alias}/page/{pageNum}")
     public String viewCategoryByPage(@PathVariable("category_alias") String alias,
                                @PathVariable("pageNum") Integer pageNum,Model model) {
+
+        // TODO : Caching
         Category category = categoryService.getCategory(alias);
 
-        if(category == null){ // We can also throw exception in getCategory(alias) method and then handle it and show error page
+        if(category == null){
             return "error/404";
         }
         List<Category> listCategoryParents = categoryService.getCategoryParents(category); // For breadcrumb
@@ -69,7 +71,9 @@ public class ProductControllerFrontEnd {
     }
 
     @GetMapping("/p/{product_alias}")
-    public String viewProductDetail(@PathVariable("product_alias") String alias, Model model, HttpServletRequest request){
+    public String viewProductDetail(@PathVariable("product_alias") String alias, Model model,
+                                    HttpServletRequest request){
+
         Product product = productService.getProductByAlias(alias);
         if(product == null){
             return "error/404";
@@ -78,18 +82,18 @@ public class ProductControllerFrontEnd {
         // For breadcrumb
         List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
 
-        // TODO : Use Redis to Store the top 3 Reviews
         Page<Review> page = reviewService.list3MostVotedReviewsByProduct(product);
         List<Review> listReviews = page.getContent();
-        System.out.println("Printing List of Reviews :: " + listReviews);
 
         Customer customer = getAuthenticatedCustomer(request);
         if(customer != null) {
-            boolean hasCustomerAlreadyReviewedProduct = reviewService.hasCustomerAlreadyReviewedProduct(customer, product.getId());
+            boolean hasCustomerAlreadyReviewedProduct = reviewService
+                    .hasCustomerAlreadyReviewedProduct(customer, product.getId());
             if(hasCustomerAlreadyReviewedProduct) {
                 model.addAttribute("customerReviewed", hasCustomerAlreadyReviewedProduct);
             }else {
-                boolean canCustomerReviewProduct = reviewService.canCustomerReviewProduct(customer, product.getId());
+                boolean canCustomerReviewProduct = reviewService
+                        .canCustomerReviewProduct(customer, product.getId());
                 model.addAttribute("customerCanReview", canCustomerReviewProduct);
             }
         }

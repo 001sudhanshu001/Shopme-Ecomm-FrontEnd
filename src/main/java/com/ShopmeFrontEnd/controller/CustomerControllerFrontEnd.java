@@ -72,11 +72,12 @@ public class CustomerControllerFrontEnd {
         return "register/register_success";
     }
 
-    private void sendVerificationEmail(HttpServletRequest request, Customer customer) throws MessagingException, UnsupportedEncodingException {
+    private void sendVerificationEmail(HttpServletRequest request, Customer customer)
+            throws MessagingException, UnsupportedEncodingException {
+
         EmailSettingBag emailSetting = settingService.getEmailSetting();
 
         JavaMailSenderImpl mailSender = MailSenderUtil.prepareMailSender(emailSetting);
-
 
         String toAddress = customer.getEmail();
         String subject = emailSetting.getCustomerVerifySubject();
@@ -171,7 +172,9 @@ public class CustomerControllerFrontEnd {
         Object principal = request.getUserPrincipal();
 
         // if customer logged-in using DATABASE
-        if(principal instanceof UsernamePasswordAuthenticationToken || principal instanceof RememberMeAuthenticationToken){
+        if(principal instanceof UsernamePasswordAuthenticationToken
+                || principal instanceof RememberMeAuthenticationToken){
+
             CustomerUserDetail userDetail = getCustomerUserDetailObject(principal);
             Customer authenticatedCustomer = userDetail.getCustomer();
             authenticatedCustomer.setFirstName(customer.getFirstName());

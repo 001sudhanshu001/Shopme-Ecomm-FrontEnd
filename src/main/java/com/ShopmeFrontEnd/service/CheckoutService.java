@@ -1,6 +1,5 @@
 package com.ShopmeFrontEnd.service;
 
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,13 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 @Transactional
 public class CheckoutService{
-
-
 
     public CheckoutInfo prepareCheckout(List<CartItem> cartItems, ShippingRate shippingRate) {
         CheckoutInfo checkoutInfo = new CheckoutInfo();
@@ -28,9 +23,6 @@ public class CheckoutService{
         float productTotal = calculateProductTotal(cartItems);
         float shippingCost = (int) calculateShippingCost(cartItems, shippingRate, 138);
         float paymentTotal = productTotal + shippingCost;
-
-        System.out.println("Payment : " + paymentTotal);
-        System.out.println("Shipping : " + shippingCost);
 
         checkoutInfo.setProductCost(productCost);
         checkoutInfo.setProductTotal(productTotal);
@@ -61,7 +53,7 @@ public class CheckoutService{
         for (CartItem item : cartItems) {
             Product product = item.getProduct();
             float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / division;
-            float finalWeight = product.getWeight() > dimWeight ? product.getWeight() : dimWeight;
+            float finalWeight = Math.max(product.getWeight(), dimWeight);
             float shippingCost = finalWeight * item.getQuantity() * shippingRate.getRate();
 
             item.setShippingCost(shippingCost);
@@ -85,8 +77,6 @@ public class CheckoutService{
         for (CartItem item : cartItems) {
             total += item.getSubTotal();
         }
-        System.out.println("::::::::::::::::::::::::::::::::: TOTAL ::::::::::::::::::::::::::::::::::::::");
-        System.out.println(total);
         return total;
     }
 }

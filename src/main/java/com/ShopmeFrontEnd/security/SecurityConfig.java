@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private OAuth2LoginSuccessHandler auth2LoginSuccessHandler;
+
     @Autowired
     private DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
 
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .and()
                 .authorizeRequests()
                 .mvcMatchers("/account_details", "/update_account_details", "/cart", "/orders/**",
-                        "/address_bool/**", "/checkout", "/place_order",
+                        "/address_book/**", "/checkout", "/place_order",
                         "/reviews/** ", "/write_review/**", "/post_review/**").authenticated()
                 .anyRequest().permitAll()
                 .and()

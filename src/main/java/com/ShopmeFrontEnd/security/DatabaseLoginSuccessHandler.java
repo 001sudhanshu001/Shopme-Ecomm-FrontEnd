@@ -22,7 +22,10 @@ public class DatabaseLoginSuccessHandler extends SavedRequestAwareAuthentication
     private CustomerServiceFrontEnd customerService;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication)
+            throws ServletException, IOException {
 
         CustomerUserDetail userDetail = (CustomerUserDetail) authentication.getPrincipal();
         Customer customer = userDetail.getCustomer();

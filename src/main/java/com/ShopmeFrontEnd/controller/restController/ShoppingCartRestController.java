@@ -22,7 +22,8 @@ public class ShoppingCartRestController {
 
     @PostMapping("/cart/add/{productId}/{quantity}")
     public String addProductToCart(@PathVariable(name = "productId") Integer productId,
-                                   @PathVariable(name = "quantity") Integer quantity, HttpServletRequest request) {
+                                   @PathVariable(name = "quantity") Integer quantity,
+                                   HttpServletRequest request) {
 
         // This String message will be response which is shown by javascript code
         try {
@@ -38,7 +39,8 @@ public class ShoppingCartRestController {
         }
     }
 
-    private Customer getAuthenticatedCustomer(HttpServletRequest request) throws CustomerNotFoundException {
+    private Customer getAuthenticatedCustomer(HttpServletRequest request)
+            throws CustomerNotFoundException {
         String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
 
         if (email == null) { // If user tries to add to cart without log-in
@@ -50,7 +52,8 @@ public class ShoppingCartRestController {
 
     @PostMapping("/cart/update/{productId}/{quantity}")
     public String updateQuantity(@PathVariable(name = "productId") Integer productId,
-                                 @PathVariable(name = "quantity") Integer quantity, HttpServletRequest request) {
+                                 @PathVariable(name = "quantity") Integer quantity,
+                                 HttpServletRequest request) {
 
         try {
             Customer customer = getAuthenticatedCustomer(request);
@@ -64,7 +67,8 @@ public class ShoppingCartRestController {
     }
 
     @DeleteMapping("/cart/remove/{productId}")
-    public String removeProduct(@PathVariable(name = "productId") Integer productId, HttpServletRequest request) {
+    public String removeProduct(@PathVariable(name = "productId") Integer productId,
+                                HttpServletRequest request) {
         try {
             Customer customer = getAuthenticatedCustomer(request);
             cartService.removeProduct(productId, customer);

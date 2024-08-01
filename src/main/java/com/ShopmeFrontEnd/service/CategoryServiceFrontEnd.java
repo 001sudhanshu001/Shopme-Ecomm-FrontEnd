@@ -3,6 +3,8 @@ package com.ShopmeFrontEnd.service;
 import com.ShopmeFrontEnd.dao.CategoryRepoFrontEnd;
 import com.ShopmeFrontEnd.entity.readonly.Category;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,21 +16,26 @@ import java.util.Set;
 public class CategoryServiceFrontEnd {
     private final CategoryRepoFrontEnd repoFrontEnd;
 
+    @Cacheable(value = "noChildCategories", key = "'listNoChildrenCategory'")
     public List<Category> listNoChildrenCategory(){
-        List<Category> listNoChiildrenCategory = new ArrayList<>();
+        List<Category> listNoChildrenCategory = new ArrayList<>();
+
         List<Category> allEnabled = repoFrontEnd.findAllEnabled();
         allEnabled.forEach(category -> {
             Set<Category> children = category.getChildren();
             if(children == null || children.isEmpty()){
-                listNoChiildrenCategory.add(category);
+                listNoChildrenCategory.add(category);
             }
         });
-        return listNoChiildrenCategory;
+        return listNoChildrenCategory;
     }
 
+    // TODO -> Causes LAZY Initialization Exception
+//    @Cacheable(value = "category", key = "#alias") // Causes LAZY initialization Exception for children
     public Category getCategory(String alias){
         return repoFrontEnd.findByAliasEnabled(alias);
     }
+
 
     public List<Category> getCategoryParents(Category child) {
         // This will return parent in the top-down order

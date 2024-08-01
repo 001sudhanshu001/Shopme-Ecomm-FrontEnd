@@ -3,6 +3,7 @@ package com.ShopmeFrontEnd.security.oauth2;
 import com.ShopmeFrontEnd.entity.readonly.AuthenticationType;
 import com.ShopmeFrontEnd.entity.readonly.Customer;
 import com.ShopmeFrontEnd.service.CustomerServiceFrontEnd;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -15,12 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Lazy
     @Autowired
     private CustomerServiceFrontEnd customerService;
-    // This method will be invocked after the oauth login, So we can get user's detail if user is not in the database
+    // This method will be invoked after the oauth login, So we can get user's detail if user is not in the database
     // and store then save it into database
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -32,8 +34,8 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         String countryCode = request.getLocale().getCountry();
         String clientName = oauth2User.getClientName();
 
-        System.out.println("onAuthenticationSuccess : " + name + " | " + email);
-        System.out.println("Client Name " + clientName);
+        log.info("onAuthenticationSuccess : " + name + " | " + email);
+        log.info("Client Name " + clientName);
 
         AuthenticationType authenticationType = getAuthenticationType(clientName);
         Customer customer = customerService.getCustomerByEmail(email);

@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
-
 @Service
 @AllArgsConstructor
 public class ProductServiceFrontEnd {
@@ -27,10 +25,9 @@ public class ProductServiceFrontEnd {
         return productRepo.listProductByCategory(categoryId, categoryIdMatch, pageable);
     }
 
+    // TODO -> Causes LAZY Initialization Exception
+//    @Cacheable(value = "product", key = "#alias")
     public Product getProductByAlias(String alias) {
-        //        if(product == null){
-//            throw new ProductNotFoundException("Could not find any product with alias " + alias);
-//        }
         return productRepo.findByAlias(alias);
     }
 

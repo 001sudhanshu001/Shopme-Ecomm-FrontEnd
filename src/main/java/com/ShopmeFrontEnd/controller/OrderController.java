@@ -38,7 +38,9 @@ public class OrderController {
     @GetMapping("/orders/page/{pageNum}")
     public String listOrdersByPage(Model model, HttpServletRequest request,
                                    @PathVariable(name = "pageNum") int pageNum,
-                                   @Param("sortField")String sortField, @Param("sortDir")String sortDir, @Param("orderKeyword")String orderKeyword
+                                   @Param("sortField")String sortField,
+                                   @Param("sortDir")String sortDir,
+                                   @Param("orderKeyword")String orderKeyword
     ) throws CustomerNotFoundException {
         Customer customer = getAuthenticatedCustomer(request);
         Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, orderKeyword);
@@ -67,7 +69,8 @@ public class OrderController {
     }
 
     @GetMapping("/orders/detail/{id}")
-    public String viewOrderDetails(Model model, @PathVariable("id") Integer id, HttpServletRequest request) throws CustomerNotFoundException {
+    public String viewOrderDetails(Model model, @PathVariable("id") Integer id, HttpServletRequest request)
+            throws CustomerNotFoundException {
 
         Customer customer = getAuthenticatedCustomer(request);
         Order order = orderService.getOrder(id, customer);

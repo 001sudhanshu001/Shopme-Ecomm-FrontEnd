@@ -47,7 +47,8 @@ public class AddressController {
 //    }
 
     @GetMapping("/address_book")
-    public String showAddressBook(Model model, HttpServletRequest request) throws CustomerNotFoundException {
+    public String showAddressBook(Model model, HttpServletRequest request)
+            throws CustomerNotFoundException {
         Customer customer = getAuthenticatedCustomer(request);
         List<Address> listAddresses = addressService.listAddressBook(customer);
         boolean usePrimaryAddressAsDefault = true;
@@ -78,7 +79,8 @@ public class AddressController {
     }
 
     @PostMapping("/address_book/save")
-    public String saveAddress(Address address, HttpServletRequest request, RedirectAttributes ra) throws CustomerNotFoundException {
+    public String saveAddress(Address address, HttpServletRequest request, RedirectAttributes ra)
+            throws CustomerNotFoundException {
 
         Customer customer = getAuthenticatedCustomer(request);
         address.setCustomer(customer);
@@ -103,6 +105,9 @@ public class AddressController {
         List<Country> listCountries = customerService.listAllCountries();
 
         Address address = addressService.get(addressId, customer.getId());
+        if(address == null) {
+            return "error/404";
+        }
 
         model.addAttribute("address", address);
         model.addAttribute("listCountries", listCountries);
@@ -118,8 +123,15 @@ public class AddressController {
 
         Customer customer = getAuthenticatedCustomer(request);
 
+        // Checking if this Address belongs to this user
+        Address address = addressService.get(addressId, customer.getId());
+        if(address == null) {
+            return "error/404";
+        }
+
         addressService.delete(addressId, customer.getId());
-        ra.addFlashAttribute("message", "The address ID " + addressId + " has been deleted.");
+        ra.addFlashAttribute("message",
+                "The address ID " + addressId + " has been deleted.");
 
         return "redirect:/address_book";
     }
