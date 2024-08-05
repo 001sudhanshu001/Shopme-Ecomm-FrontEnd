@@ -76,8 +76,5 @@ public class CheckoutInfo implements Serializable {
         this.codSupported = codSupported;
     }
 
-    public String getPaymentTotal4PayPal() {
-        DecimalFormat formatter = new DecimalFormat("##.##");
-        return formatter.format(paymentTotal);
-    }
+    // TODO : Add PayPal
 }

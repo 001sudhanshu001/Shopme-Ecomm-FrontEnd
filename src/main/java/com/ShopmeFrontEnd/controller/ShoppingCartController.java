@@ -55,7 +55,8 @@ public class ShoppingCartController {
 
     private Customer getAuthenticatedCustomer(HttpServletRequest request) {
         String email = GetEmailOfAuthenticatedCustomer.getEmail(request);
-        // Since only Logged-in customer can call "/cart" url(we configure in SecurityConfig ) So the email is always present
+        // Since only Logged-in customer can call "/cart" url(we configure in SecurityConfig )
+        // So the email is always present
 
         return customerService.getCustomerByEmail(email);
     }

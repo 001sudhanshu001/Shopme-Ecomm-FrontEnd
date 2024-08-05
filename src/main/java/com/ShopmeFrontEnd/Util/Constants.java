@@ -11,9 +11,6 @@ public class Constants {
         String region = "ap-south-1";
         String pattern = "https://%s.s3.%s.amazonaws.com";
 
-        log.info("Constants | bucketName : " + bucketName);
-        log.info("Constants | region : " + region);
-
         return String.format(pattern, bucketName, region);
     }
 

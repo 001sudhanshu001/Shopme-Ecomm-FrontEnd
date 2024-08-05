@@ -40,7 +40,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         AuthenticationType authenticationType = getAuthenticationType(clientName);
         Customer customer = customerService.getCustomerByEmail(email);
 
-        if(customer == null){ // means this user does not exist in our database, so we will enter it into DB
+        if(customer == null){
             customerService.addNewCustomerUponOAuthLogin(name, email, countryCode, authenticationType);
         }else { // Just changing Authentication Type
              customerService.updateAuthenticationType(customer, authenticationType);
@@ -52,7 +52,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     private AuthenticationType getAuthenticationType(String clientName) {
         if(clientName.equals("Google")){
             return AuthenticationType.GOOGLE;
-        }else if(clientName.equals("Facebook")){
+        }else if(clientName.equals("Facebook")){ // TODO : Add Facebook and Github
             return AuthenticationType.FACEBOOK;
         } else if (clientName.equals("Github")) {
             return AuthenticationType.GITHUB;

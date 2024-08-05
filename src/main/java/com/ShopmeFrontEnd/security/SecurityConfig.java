@@ -3,6 +3,7 @@ package com.ShopmeFrontEnd.security;
 import com.ShopmeFrontEnd.security.oauth2.CustomerOauth2UserService;
 //import com.ShopmeFrontEnd.security.oauth2.OAuth2LoginSuccessHandler;
 import com.ShopmeFrontEnd.security.oauth2.OAuth2LoginSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @PostConstruct
@@ -28,14 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        System.out.println("SecurityConfig Object Created....!");
 //    }
 
-    @Autowired
-    private CustomerOauth2UserService oauth2UserService;
+    private final CustomerOauth2UserService oauth2UserService;
 
-    @Autowired
-    private OAuth2LoginSuccessHandler auth2LoginSuccessHandler;
+    private final OAuth2LoginSuccessHandler auth2LoginSuccessHandler;
 
-    @Autowired
-    private DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
+    private final DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -95,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception { // for ant matching
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
     }
 

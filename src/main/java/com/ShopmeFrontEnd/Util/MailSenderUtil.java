@@ -11,7 +11,6 @@ public class MailSenderUtil {
     public static String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
 
-        // we got full url of current request, so to get only site url
         return siteURL.replace(request.getServletPath(), "");
 //        FULL URL : http://localhost:8085/create_customer
 //        Required URL http://localhost:8085

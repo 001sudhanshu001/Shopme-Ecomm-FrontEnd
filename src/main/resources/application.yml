@@ -29,14 +29,8 @@ spring:
             client:
                 registration:
                     google:
-                        client-id:  263056919918-q5havljgc69uqu6q06ej7d4a3ng412k9.apps.googleusercontent.com #263056919918-0ease87oocd2k2oeqk75g6dj0ih3ja71.apps.googleusercontent.com
-                        client-secret:  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 #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
+                        client-id:  263056919918-rbva86rrsqbul9n5mjrj88gudkp0j7o0.apps.googleusercontent.com
+                        client-secret:  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
                         scope:
                         - email
                         - profile
-                    github:
-                        client-id: 0b9e99a0992b4d675b6f
-                        client-secret: 474c9107194caec9a669a9876d2d68590e2dfab1
-                        scope:
-                        - user:email
-                        - read:user
