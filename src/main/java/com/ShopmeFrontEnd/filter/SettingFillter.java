@@ -1,10 +1,9 @@
 package com.ShopmeFrontEnd.filter;
 
-import com.ShopmeFrontEnd.Util.Constants;
+import com.ShopmeFrontEnd.Util.AmazonS3Util;
 import com.ShopmeFrontEnd.entity.readonly.Setting;
 import com.ShopmeFrontEnd.service.SettingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Order(-120)
 public class SettingFillter implements Filter {
-
     // This filter will be executed for every request for each url
+
+    private final AmazonS3Util amazonS3Util;
 
     private final SettingService service;
     @Override
@@ -38,10 +38,16 @@ public class SettingFillter implements Filter {
         // Loading General setting from Database
         List<Setting> generalSettings = service.getGeneralSettings();
         generalSettings.forEach(setting -> {
-            request.setAttribute(setting.getKey(), setting.getValue());
+            if(setting.getKey().equals("SITE_LOGO")) {
+                String preSignedUrl = amazonS3Util.generatePreSignedUrl(setting.getValue().substring(1));
+                request.setAttribute("SITE_LOGO", preSignedUrl);
+            } else {
+                request.setAttribute(setting.getKey(), setting.getValue());
+            }
+
         });
 
-        request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
+//        request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI); // OLD, Now the SITE_LOGO is already set
         filterChain.doFilter(request, response);
     }
 }

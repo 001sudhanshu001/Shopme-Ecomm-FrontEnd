@@ -109,7 +109,6 @@ public class CustomerControllerFrontEnd {
     // After verification we enabled the customer
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code, Model model) {
-        System.out.println("Verify Called");
         boolean verified = customerService.verify(code);
 
         // return view based on the verification status
@@ -137,8 +136,6 @@ public class CustomerControllerFrontEnd {
         
         return "customer/account_form";
     }
-
-
 
     @PostMapping("/update_account_details")
     public String updateAccountDetails(Model model, Customer customer, RedirectAttributes ra,

@@ -98,8 +98,6 @@ public class ProductControllerFrontEnd {
             }
         }
 
-        product.getImages().forEach(i -> System.out.println(i.getPreSignedURL()));
-
         model.addAttribute("listCategoryParents", listCategoryParents);
         model.addAttribute("product", product);
         model.addAttribute("pageTitle", product.getShortName());

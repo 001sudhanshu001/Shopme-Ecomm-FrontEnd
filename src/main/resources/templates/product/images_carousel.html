@@ -13,13 +13,13 @@
                   </ol>
                   <div class="carousel-inner">
                       <div class="carousel-item active">
-                          <img th:src="@{${product.mainImagePath}}" alt="Product Image" class="img-fluid"/>
+                          <img th:src="@{${product.getPreSignedURL()}}" alt="Product Image" class="img-fluid"/>
 <!--                          <img th:src="@{/images/ShopmeAdminSmall.png}"/>-->
                       </div>
 
                       <th:block th:each="extraImage : ${product.images}">
                           <div class="carousel-item">
-                              <img th:src="@{${extraImage.imagePath}}" class="img-fluid">
+                              <img th:src="@{${extraImage.getPreSignedURL()}}" class="img-fluid">
 <!--                              <img th:src="@{/images/ShopmeAdminSmall.png}"/>-->
                           </div>
                       </th:block>

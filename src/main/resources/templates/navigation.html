@@ -7,9 +7,8 @@
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <a th:href="@{/}" class="navbar-brand">
 <!--                <img th:src="@{/images/ShopmeAdminSmall.png}"/>-->
-                <img th:src="@{${S3_BASE_URI + SITE_LOGO}}"/> <!-- TODO : logo with presigned url-->
+                <img th:src="@{${SITE_LOGO}}"/> <!-- This includes presigned URL -->
             </a>
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar, #searchNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
