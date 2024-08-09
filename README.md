@@ -3,7 +3,7 @@
 ## Introduction
 Shopme is a comprehensive e-commerce application developed using Spring Boot and Thymeleaf with MVC Architecture. This repository is dedicated to the Customer application, which allows users to browse products, add them to a shopping cart, and place orders.
 
-For the Admin application repository, please visit: [Shopme Admin Application](https://github.com/001sudhanshu001/Shopme-Ecomm-Admin.git)
+For the Admin application repository, please visit: [Shopme Admin Application](https://github.com/001sudhanshu001/Shopme_ecomm.git)
 
 ## Features
 
