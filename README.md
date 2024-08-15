@@ -7,7 +7,7 @@ For the Admin application repository, please visit: [Shopme Admin Application](h
 
 ## Features
 
-- **Product Browsing**: Explore a wide range of products with detailed descriptions and images.
+- **Product Browsing**: Explore a wide range of products with detailed descriptions and images. Images are rendered using presigned URLs from S3.
 - **User Account**: Sign up with either email verification or Google, and manage profile details, order history, and multiple addresses.
 - **Shopping Cart**: Add products to your cart, and manage quantities.
 - **Order Placement**: Place orders, select shipping methods, and track order status.
@@ -23,4 +23,4 @@ For the Admin application repository, please visit: [Shopme Admin Application](h
 
 ## Docker Image
 
-The Docker image for the Shopme Customer application is available at: [Docker Hub - sudhanshu00i/shopme-customer](https://hub.docker.com/repository/docker/sudhanshu00i/shopme-customer)
+The Docker image for the Shopme Customer application is available at: [Docker Hub - shopme-customer](https://hub.docker.com/repository/docker/sudhanshu00i/shopme-customer)
